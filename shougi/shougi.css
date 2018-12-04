@@ -1,0 +1,63 @@
+body{
+    position: absolute;
+}
+#bass{
+    position: absolute;
+    z-index: 1;
+}
+#ou{
+    position: absolute;
+    z-index: 2;
+    top:285px;
+    left:535px;
+    filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.6));
+}
+#ryuma{
+    position: absolute;
+    z-index: 2;
+    top:125px;
+    left:535px;
+    filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.6));
+}
+#invryuma{
+    position: absolute;
+    z-index: 2;
+    top:125px;
+    left:458px;
+    filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.6));
+}
+#kinn{
+    position: absolute;
+    z-index: 2;
+    top:363px;
+    left:313px;
+    filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.6));
+}
+#sotokinn{
+    position: absolute;
+    z-index: 2;
+    top:363px;
+    left:750px;
+    filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.6));
+}
+#ginn{
+    position: absolute;
+    z-index: 2;
+    top:45px;
+    left:458px;
+    filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.6));
+}
+#kyosya{
+    position: absolute;
+    z-index: 2;
+    top:363px;
+    left:610px;
+    filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.6));
+}
+#invfu{
+    position: absolute;
+    z-index: 2;
+    top:370px;
+    left:540px;
+    filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.6));
+}

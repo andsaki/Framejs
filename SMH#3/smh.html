@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<link rel = "stylesheet" href="smh.css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<title>SMH</title>
+</head>
+<body>
+    <form>
+            <input id="button" type="button" value="Start">
+    </form>
+    <div id = "outSVG"> 
+        <svg id = "inSVG" width = "800" height = "500" viewBox="0 0 800 500">
+            <rect class = "boxL" x=20 y=100 width="110" height="50"></rect>
+            <g class="text">
+                <text x=30 y=130>
+                    0 LDC 0 10
+                </text>
+                <text id = "L0" x=100 y=130>
+                    10
+                </text>
+            </g>
+            <rect class = "boxL" x=20 y=155 width=110 height=50></rect>
+            <g class="text">
+                <text x=30 y=185>
+                    1 LDC 0 20
+                </text>
+                <text id = "L1" x=100 y=185>
+                    20
+                </text>
+            </g>
+            <rect class = "boxL" x=20 y=210 width=110 height=50></rect>
+            <g class="text">
+                <text x=30 y=240>
+                    2 SB 0 0
+                </text>
+            </g>
+            <rect class = "boxL" x=20 y=265 width=110 height=50></rect>
+            <g class="text">
+                <text x=30 y=295>
+                    3 HLT 0 0
+                </text>
+            </g>
+            <rect class = "boxL" x=20 y=320 width=110 height=50></rect>
+            <g class="text">
+                <text x=30 y=350>
+                    4
+                </text>
+            </g>
+            <rect class = "boxL" x=20 y=375 width=110 height=50></rect>
+            <g class="text">
+                <text x=30 y=405>
+                    5
+                </text>
+            </g>
+            <rect class = "boxL" x=140 y=100 width=110 height=50></rect>
+            <g class="text">
+                <text x=150 y=130>               
+                </text>
+            </g>
+            <rect class = "boxL" x=140 y=155 width=110 height=50></rect>
+            <g class="text">
+                <text x=150 y=185>    
+                </text>
+            </g>
+            <rect class = "boxL" x=140 y=210 width=110 height=50></rect>
+            <g class="text">
+                <text x=150 y=240>                   
+                </text>
+            </g>
+            <rect class = "boxL" x=140 y=265 width=110 height=50></rect>
+            <g class="text">
+                <text x=150 y=295>            
+                </text>
+            </g>
+            <rect class = "boxL" x=140 y=320 width=110 height=50></rect>
+            <g class="text">
+                <text x=150 y=350>
+                </text>
+            </g>
+            <rect class = "boxL" x=140 y=375 width=110 height=50></rect>
+            <g class="text">
+                <text id = "LP" x=150 y=130>
+                    <- pc
+                </text>
+            </g>      
+            <rect class = "boxR" x=320 y=100 width=110 height=50></rect>
+            <g class="text">
+                <text x=330 y=130>
+                </text>
+            </g>
+            <rect class = "boxR" x=320 y=155 width=110 height=50></rect>
+            <g class="text">
+                <text x=330 y=185>
+                </text>
+             </g>
+            <rect class = "boxR" x=320 y=210 width=110 height=50></rect>
+            <g class="text">
+                <text x=330 y=240>
+                </text>
+            </g>
+            <rect class = "boxR" x=320 y=265 width=110 height=50></rect>
+            <g class="text">
+                <text x=330 y=295>
+                </text>
+            </g>
+            <rect class = "boxR" x=320 y=320 width=110 height=50></rect>
+            <g class="text">
+                <text x=330 y=350>
+                </text>
+            </g>
+            <rect class = "boxR" x=320 y=375 width=110 height=50></rect>
+            <g class="text">
+                <text id = "RP" x=330 y=405>
+                    sp ->
+                </text>
+            </g>
+            <rect class = "boxR" x=440 y=100 width=110 height=50></rect>
+            <g class="text">
+                <text x=450 y=130>
+                    5
+                </text>
+            </g>
+            <rect class = "boxR" x=440 y=155 width=110 height=50></rect>
+            <g class="text">
+                <text x=450 y=185>
+                    4
+                </text>
+            </g>
+            <rect class = "boxR" x=440 y=210 width=110 height=50></rect>
+            <g class="text">
+                <text x=450 y=240>
+                    3
+                </text>
+            </g>
+            <rect class = "boxR" x=440 y=265 width=110 height=50></rect>
+            <g class="text">
+                <text x=450 y=295>
+                    2
+                </text>
+            </g>
+            <rect class = "boxR" x=440 y=320 width=110 height=50></rect>
+            <g class="text">
+                <text x=450 y=350>
+                    1
+                </text> 
+            </g>
+            <rect class = "boxR" x=440 y=375 width=110 height=50></rect>
+            <g class="text">
+                <text x=450 y=405>
+                    0 
+                </text>
+                <text id = "R0" x=470 y=625>
+                    10
+                </text>
+                <text id = "R1" x=470 y=625>
+                    20
+                </text>
+                <text id = "sub" x=498 y=625>
+                    -
+                </text>
+                <text id = "R2" x=470 y=405>
+                </text>
+            </g>
+        </svg>
+    </div>
+<br />
+<script type="text/javascript" src="smh.js"></script>
+</body>
+</html>

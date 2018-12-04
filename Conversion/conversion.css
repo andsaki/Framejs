@@ -1,0 +1,30 @@
+body{
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+#outSVG{
+    margin-top: 5%;
+    width: 570px;
+    display: inline-block;   
+    background-color: skyblue;
+}
+
+#inSVG{
+    stroke-width: 0.08rem;
+    filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.6));
+}
+
+.boxL{
+    fill: yellow;
+    stroke: black; 
+}
+
+.boxR{  
+    fill: greenyellow;
+    stroke: black;
+}
+
+.text{
+    font-family: "sans-serif" ; 
+}

@@ -1,0 +1,12 @@
+#moverect{
+    left: 100px;
+}
+#inSVG{
+    stroke-width: 0.08rem;
+    filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.6));
+    background-color: aliceblue;
+}
+#button{
+    float: right;
+
+}

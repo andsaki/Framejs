@@ -1,0 +1,53 @@
+body{
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+#outSVG{
+    margin-top: 5%;
+    width: 570px;
+    display: inline-block;   
+    background-color: skyblue;
+}
+
+#inSVG{
+    stroke-width: 0.08rem;
+    filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.6));
+}
+
+.boxL{
+    fill: yellow;
+    stroke: black; 
+}
+
+.boxR{  
+    fill: greenyellow;
+    stroke: black;
+}
+#L0{
+    transition: 1s;
+}
+#L1{
+    transition-delay: 1s;
+    transition-duration: 1s;
+}
+#LP{
+    transition-delay: 1s;
+    transition-duration: 1s;
+}
+#R0{
+    transition: 1s;
+}
+#R1{
+    transition-delay: 1s;
+    transition-duration: 1s;
+}
+#RP{
+    transition: 1s;
+}
+#sub{
+    transition-delay: 1s;
+    transition-duration: 1s;
+}
+.text{
+    font-family: "sans-serif" ; 
+}
