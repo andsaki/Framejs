@@ -16,11 +16,15 @@ function DOM(domname){
 
 function eventFunction(i){
     var i = typeof i !== 'undefined' ?  i : 0;
-    console.log(i)
+    //console.log(i)
     if (i == 0){
-        StartPosition = {
-            x: $("#kinn").css('left'), 
-            y: $("#kinn").css('top')
+        StartPosition = [];
+        for (let j in Frames[i]){
+            StartPosition.push({
+                x: DOM(j).css('left'), 
+                y: DOM(j).css('top')
+            });
+            console.log(StartPosition);
         };
         console.log("start");
     };
@@ -33,7 +37,7 @@ function eventFunction(i){
             console.log(error);
         });      
     }else if(Frames[i].setting.event == "click"){  
-        console.log(Frames[i]);
+        //console.log(Frames[i]);
         $(`#${defaultset.next}`).on('click', function() {
             Deal(i);
         });
@@ -41,12 +45,12 @@ function eventFunction(i){
             Back(i);
         });
         $(`#${defaultset.reset}`).on('click', function() {
-            Reset(StartPosition);
+            Reset(i,StartPosition);
         });
     };
 };
 
-function Back(i){
+/*function Back(i){
     i = i - 2;
     for (let j in Frames[i]){
         //console.log(i);
@@ -92,6 +96,15 @@ function Back(i){
                     fill: "forwards"           
                 })
             };
+            if (Frame[i][j].rotate != null){
+                DOM(j).keyframes({
+                    '100%': {
+                        rotateX: 180,
+                        rotateY: 180, 
+                        rotateZ: 180
+                    }
+                })
+            };
         };
     };
     i = i + 1;    
@@ -101,20 +114,22 @@ function Back(i){
         $(`#${defaultset.next}`).off("click");
         eventFunction(i);
     };
-};
+};*/
 
-function Reset(StartPosition){
+function Reset(i,StartPosition){
     console.log(StartPosition);
     a = StartPosition.x;
     b = StartPosition.y;
-    $("#kinn").css({left: a, top: b});
-    $(`#${defaultset.reset}`).off("click");
-    $(`#${defaultset.next}`).off("click");
-    $("#kinn").keyframes({
-        '100%': {
-            opacity: 1
-        }
-    })
+    for (let j in Frames[i]){
+        DOM(j).css({left: a, top: b});
+        $(`#${defaultset.reset}`).off("click");
+        $(`#${defaultset.next}`).off("click");
+        $("#kinn").keyframes({
+            '100%': {
+                opacity: 1
+            }
+        })
+    };
     eventFunction();
 };
 
@@ -155,18 +170,19 @@ function Animation(domname,start,ctrl,end,dur){
 
 function Deal(i){
     for (let j in Frames[i]){
-        //console.log(i);
         if (`${j}` != "setting"){
+            console.log(i,Frames[i][j]);
             if (Frames[i][j].position.x && Frames[i][j].position.y != null){
                 var start = { x: DOM(j).css('left'), y: DOM(j).css('top') }; // 開始位置
                 var end = Frames[i][j].position; // 終了位置
                 var ctrl = Frames[i][j].control; // 制御点
-                console.log(start);
+                console.log(start,end);
                 if (Frames[i][j].delay == null){
                     Animation(DOM(j),start,ctrl,end,Frames[i][j].duration);
                 }else{
                     setTimeout(function(){
-                        Animation(DOM(j),start,ctrl,end,Frames[i][j].duration);
+                        console.log(i);
+                        Animation(DOM(j),start,ctrl,end,Frames[i-1][j].duration);
                     },Frames[i][j].delay);
                 };
             };
@@ -198,6 +214,15 @@ function Deal(i){
                     fill: "forwards"           
                 })
             };
+            /*if (Frame[i][j].rotate != null){
+                DOM(j).keyframes({
+                    '100%': {
+                        rotateX: 180,
+                        rotateY: 180, 
+                        rotateZ: 180
+                    }
+                })
+            };*/
         };
     };
     i = i + 1;    
