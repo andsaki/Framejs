@@ -1,6 +1,44 @@
 function Frame(Frames){
     var Frames;
+    SP = StartPosition();
+    //console.log(SP);
     eventFunction();
+};
+
+function StartPosition(){
+    var SP = [];
+    for(var i = 0; i < Frames.length;i++){
+        for (let j in Frames[i]){
+            SP.push({
+                domname : j,
+                x: DOM(j).css('left'), 
+                y: DOM(j).css('top')
+            });
+        };
+    };
+    //console.log(StartPosition);
+    SP = Duplication(SP);
+    //console.log(StartPosition);
+    return SP
+};
+
+function Duplication(overlapped){
+    // 重複を削除したリスト
+    var values = [];
+    var no_overlapped = overlapped.filter(e => {
+        if (values.indexOf(e["domname"]) === -1) {
+            // values に値が存在しない要素のみをフィルタリング
+            values.push(e["domname"]); 
+            return e  
+        }
+    });
+    no_overlapped.some(function(v, n){
+        if (v.domname == "setting"){
+            no_overlapped.splice(n,1);   
+        }; 
+    });
+    
+    return no_overlapped
 };
 
 function Conversion(string){
@@ -16,8 +54,8 @@ function DOM(domname){
 
 function eventFunction(i){
     var i = typeof i !== 'undefined' ?  i : 0;
-    //console.log(i)
-    if (i == 0){
+    console.log("event")
+    /*if (i == 0){
         StartPosition = [];
         for (let j in Frames[i]){
             StartPosition.push({
@@ -27,7 +65,7 @@ function eventFunction(i){
             console.log(StartPosition);
         };
         console.log("start");
-    };
+    };*/
     if (Frames[i].setting.event == "auto"){
         asyncFunction(i).then(function (value) {
             // 非同期処理成功
@@ -45,7 +83,7 @@ function eventFunction(i){
             Back(i);
         });
         $(`#${defaultset.reset}`).on('click', function() {
-            Reset(i,StartPosition);
+            Reset(i,SP);
         });
     };
 };
@@ -116,20 +154,29 @@ function eventFunction(i){
     };
 };*/
 
-function Reset(i,StartPosition){
-    console.log(StartPosition);
-    a = StartPosition.x;
-    b = StartPosition.y;
-    for (let j in Frames[i]){
-        DOM(j).css({left: a, top: b});
-        $(`#${defaultset.reset}`).off("click");
-        $(`#${defaultset.next}`).off("click");
-        $("#kinn").keyframes({
-            '100%': {
-                opacity: 1
-            }
-        })
+function Reset(i,SP){
+    console.log(SP);
+    a = SP.x;
+    b = SP.y;
+    arr = [];
+    for (n = 0; n < SP.length; n++){
+        arr.push(SP[n].domname);
     };
+    console.log(arr);
+    /*for (let j in Frames[i]){
+        console.log(j);
+        if (SP.domname == j){
+            console.log(SP);
+        };
+        DOM(j).css({left: a, top: b});
+    };*/
+    $(`#${defaultset.reset}`).off("click");
+    $(`#${defaultset.next}`).off("click");
+    $("#kinn").keyframes({
+        '100%': {
+            opacity: 1
+        }
+        })
     eventFunction();
 };
 
@@ -167,7 +214,6 @@ function Animation(domname,start,ctrl,end,dur){
     });
 };
 
-
 function Deal(i){
     for (let j in Frames[i]){
         if (`${j}` != "setting"){
@@ -181,7 +227,7 @@ function Deal(i){
                     Animation(DOM(j),start,ctrl,end,Frames[i][j].duration);
                 }else{
                     setTimeout(function(){
-                        console.log(i);
+                        //console.log(i);
                         Animation(DOM(j),start,ctrl,end,Frames[i-1][j].duration);
                     },Frames[i][j].delay);
                 };
