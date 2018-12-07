@@ -155,28 +155,20 @@ function eventFunction(i){
 };*/
 
 function Reset(i,SP){
-    console.log(SP);
-    a = SP.x;
-    b = SP.y;
-    arr = [];
+    //console.log(SP);
     for (n = 0; n < SP.length; n++){
-        arr.push(SP[n].domname);
-    };
-    console.log(arr);
-    /*for (let j in Frames[i]){
-        console.log(j);
-        if (SP.domname == j){
-            console.log(SP);
-        };
-        DOM(j).css({left: a, top: b});
-    };*/
-    $(`#${defaultset.reset}`).off("click");
-    $(`#${defaultset.next}`).off("click");
-    $("#kinn").keyframes({
-        '100%': {
-            opacity: 1
-        }
+        x = SP[n].x;
+        y = SP[n].y;
+        DOM(SP[n].domname).css({left: x, top: y});
+        DOM(SP[n].domname).keyframes({
+            '100%': {
+                opacity: 1
+            }
         })
+        //console.log(DOM(SP[n].domname));
+        $(`#${defaultset.reset}`).off("click");
+    };
+    $(`#${defaultset.next}`).off("click");
     eventFunction();
 };
 
