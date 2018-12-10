@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<link rel = "stylesheet" href="rotate.css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="jquery.keyframes.min.js"></script>
+<script src="Frame.js"></script>
+<title>トランプ</title>
+</head>
+<body>
+    <form>
+        <input id="next" type="button" value="next">
+    </form>
+    <form>
+        <input id="back" type="button" value="back">
+    </form>
+    <form>
+        <input id="reset" type="button" value="reset">
+    </form>
+    <div class="flip-container" ontouchstart="this.classList.toggle('hover');">
+        <div class="flipper">
+            <div class="front">
+                <img src="pic/kaku.png" width="68">
+            </div>
+            <div class="back">
+                    <img src="pic/ryuma.png" width="68">
+            </div>
+            
+        </div>    
+    </div>
+    <script type="text/javascript" src="rotate.js"></script>
+</body>
+</html>

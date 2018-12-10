@@ -1,0 +1,54 @@
+body{
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 200%;
+    margin:20px;
+    color: #eee;
+    background-color: #444;
+}
+div.card{
+    display: inline-block;
+    width: 176px;
+    height: 246px;
+    margin: 20px;
+    cursor: pointer;
+}
+div.card div{
+    position: absolute;
+    width: 160px;
+    height:230px;
+    font-size: 2em;
+    text-align: center;
+    line-height: 230px;
+    color: #000;
+    background-color: #fff;
+    border: 8px solid #fff;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+}
+div.card div span{
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 0.5em;
+    width: auto;
+    line-height: 1em;
+}
+div.card div.back{
+    background: #36c;
+}
+div.card div.span:last-child{
+    left: auto;
+    top: auto;
+    right: 0;
+    bottom: 0;
+    transform: rotate(180deg);
+}
+div.front{
+    transform: perspective(400px) rotateY(-180deg);
+}
+div.card:hover div.back{
+    transform: perspective(400px) rotateY(180deg);
+}
+div.card:hover div.front{
+    transform: perspective(400px) rotateY(0deg);
+}
