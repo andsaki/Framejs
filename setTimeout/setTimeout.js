@@ -22,10 +22,11 @@ var Frame2 = {
     ginn: {
         position: {x: 200, y: 100}, 
         delay: 500, 
-        duration: 1000
+        duration: 1000,
+        fadeout: 2000
     },
     setting:{
-        event: "click",
+        event: "click"
     }
 }
 var Frame3 = {
@@ -33,6 +34,15 @@ var Frame3 = {
         position: {x: 70, y: 10}, 
         duration: 1000, 
         fadeout: 2000,
+    },
+    ginn: {
+        position: {x: 200, y: 300},  
+        duration: 1000,
+        fadein: 1000
+    },
+    kyosya: {
+        position: {x: 70, y: 130},
+        duration: 2000,
     },
     setting: {
         event: "click",

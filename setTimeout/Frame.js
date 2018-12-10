@@ -55,17 +55,6 @@ function DOM(domname){
 function eventFunction(i){
     var i = typeof i !== 'undefined' ?  i : 0;
     console.log("event")
-    /*if (i == 0){
-        StartPosition = [];
-        for (let j in Frames[i]){
-            StartPosition.push({
-                x: DOM(j).css('left'), 
-                y: DOM(j).css('top')
-            });
-            console.log(StartPosition);
-        };
-        console.log("start");
-    };*/
     if (Frames[i].setting.event == "auto"){
         asyncFunction(i).then(function (value) {
             // 非同期処理成功
@@ -179,7 +168,7 @@ function asyncFunction(i) {
             // 成功
             Deal(i);
             resolve('Async Hello world');
-        }, 1000);
+        }, Frames[i].setting.interval);
     });
 };
 
@@ -237,7 +226,7 @@ function Deal(i){
                     duration: Frames[i][j].fadein,           
                     count: 1                  
                 })
-                Frames[i][j].fadein = null;
+                //Frames[i][j].fadein = null;
             }else if (Frames[i][j].fadeout != null){
                 DOM(j).keyframes({
                     '0%': {
@@ -255,8 +244,6 @@ function Deal(i){
             /*if (Frame[i][j].rotate != null){
                 DOM(j).keyframes({
                     '100%': {
-                        rotateX: 180,
-                        rotateY: 180, 
                         rotateZ: 180
                     }
                 })

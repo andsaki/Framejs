@@ -12,3 +12,10 @@
     top:400px;
     filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.6));
 }
+#kyosya{
+    position: absolute;
+    z-index: 2;
+    left:450px;
+    top:300px;
+    filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.6));
+}
