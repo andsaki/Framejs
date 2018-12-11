@@ -48,7 +48,7 @@ function Conversion(string){
 };
 
 function DOM(domname){
-    dom = $(`#${domname}`);
+    dom = $(`.${domname}`);
     return dom;
 };
 
@@ -241,13 +241,12 @@ function Deal(i){
                     fill: "forwards"           
                 })
             };
-            /*if (Frame[i][j].rotate != null){
-                DOM(j).keyframes({
-                    '100%': {
-                        rotateZ: 180
-                    }
+            //if (Frame[i][j].rotate != null){
+                DOM(j).css({
+                    "transform": "rotateY(180deg)"
                 })
-            };*/
+                //DOM(j).Frames[i][j].front
+            //};
         };
     };
     i = i + 1;    
