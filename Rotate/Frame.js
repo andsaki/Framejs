@@ -48,12 +48,26 @@ function ZIndex(){
             if (Frames[i][j].rotate != null){
                 console.log(Frames[i][j].rotate.front);
                 DOM(j).css({
-                    "transition": "0.6s",
+                    //"transition": "0.6s",
+                    "-webkit-transform-style": "preserve-3d",
+                    "-moz-transform-style": "preserve-3d",
+                    "-o-transform-style": "preserve-3d",
                     "transform-style": "preserve-3d"
                 })
                 DOM(Frames[i][j].rotate.front).css({
-                    "z-index": "100",
+                    "z-index": "2",
+                    "-webkit-backface-visibility": "hidden",
+                    "-moz-backface-visibility": "hidden",
+                    "-o-backface-visibility": "hidden",
                     "backface-visibility": "hidden"
+                    //"transform": "rotateY(-180deg)"
+                });
+                DOM(Frames[i][j].rotate.back).css({
+                    "z-index": "1",
+                    "backface-visibility": "hidden",
+                    "-webkit-backface-visibility": "hidden",
+                    "-moz-backface-visibility": "hidden",
+                    "-o-backface-visibility": "hidden"
                 });
             };
         };
@@ -65,6 +79,11 @@ function Conversion(string){
     var num = Number(bar);
     return num;
 };
+
+function StringConversion(num){
+    var string = num/1000;
+    return string;
+}
 
 function DOM(domname){
     dom = $(`.${domname}`);
@@ -218,7 +237,7 @@ function Deal(i){
     for (let j in Frames[i]){
         if (`${j}` != "setting"){
             console.log(i,Frames[i][j]);
-            if (Frames[i][j].position.x && Frames[i][j].position.y != null){
+            if (Frames[i][j].position != null){
                 var start = { x: DOM(j).css('left'), y: DOM(j).css('top') }; // 開始位置
                 var end = Frames[i][j].position; // 終了位置
                 var ctrl = Frames[i][j].control; // 制御点
@@ -261,11 +280,22 @@ function Deal(i){
                 })
             };
             if (Frames[i][j].rotate != null){
+                console.log(Frames[i][j].duration);
+                dur = StringConversion(Frames[i][j].duration);
+                console.log(dur);
                 DOM(j).css({
-                    "transform": "rotateY(180deg)"
+                    "transition": "" + dur + "s",
+                    "transform": "rotateY(180deg)",
+                    "-webkit-transform": "rotateY(180deg)",
+                    "-moz-transform": "rotateY(180deg)",
+                    "-o-transform": "rotateY(180deg)"
                 });
                 DOM(Frames[i][j].rotate.back).css({
+                    "z-index": "2",
                     "transform": "rotateY(180deg)"
+                });
+                DOM(Frames[i][j].rotate.front).css({
+                    "z-index": "1"
                 });
             };
         };
