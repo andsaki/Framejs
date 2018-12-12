@@ -1,7 +1,8 @@
 function Frame(Frames){
     var Frames;
     SP = StartPosition();
-    //console.log(SP);
+    console.log(SP);
+    ZIndex();
     eventFunction();
 };
 
@@ -40,6 +41,24 @@ function Duplication(overlapped){
     
     return no_overlapped
 };
+
+function ZIndex(){
+    for(var i = 0; i < Frames.length;i++){
+        for (let j in Frames[i]){
+            if (Frames[i][j].rotate != null){
+                console.log(Frames[i][j].rotate.front);
+                DOM(j).css({
+                    "transition": "0.6s",
+                    "transform-style": "preserve-3d"
+                })
+                DOM(Frames[i][j].rotate.front).css({
+                    "z-index": "100",
+                    "backface-visibility": "hidden"
+                });
+            };
+        };
+    };
+}
 
 function Conversion(string){
     var bar = string.match(/\d+/);
@@ -241,12 +260,14 @@ function Deal(i){
                     fill: "forwards"           
                 })
             };
-            //if (Frame[i][j].rotate != null){
+            if (Frames[i][j].rotate != null){
                 DOM(j).css({
                     "transform": "rotateY(180deg)"
-                })
-                //DOM(j).Frames[i][j].front
-            //};
+                });
+                DOM(Frames[i][j].rotate.back).css({
+                    "transform": "rotateY(180deg)"
+                });
+            };
         };
     };
     i = i + 1;    
