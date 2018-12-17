@@ -233,9 +233,62 @@ function Animation(domname,start,ctrl,end,dur){
     });
 };
 
+function asyncRotate(i,j) {
+    // Promiseオブジェクトを返却する.処理成功時にはresolveが呼ばれる
+    return new Promise(function (resolve) {
+        setTimeout(function () {
+            // 成功
+            /*DOM(j).css({
+                "transition": "0.6s",
+                "transform": "rotateY(180deg)",
+                "-webkit-transform": "rotateY(180deg)",
+                "-moz-transform": "rotateY(180deg)",
+                "-o-transform": "rotateY(180deg)",
+            });*/
+            /*DOM(j).css({
+                position: "relative",
+            })*/
+            DOM(j).keyframes({
+                translateX: 68,
+                rotateY: 180,    
+                easing: 'ease',
+                
+            },{
+                count: 1,
+                duration: 300,
+                //fill: "forwards"
+            });    
+            
+            DOM(Frames[i][j].rotate.front).keyframes({
+                rotateY: 180,
+            },{
+                count: 1,
+                duration: 300,
+                //fill: "forwards"
+            }); 
+            DOM(Frames[i][j].rotate.back).css({
+                "z-index": "2",
+                //"transform": "rotateY(180deg)"
+            });
+            DOM(Frames[i][j].rotate.back).keyframes({
+                rotateY: 180,
+            },{
+                count: 1,
+                duration: 300,
+                //fill: "forwards"
+            });
+            DOM(Frames[i][j].rotate.front).css({
+                "z-index": "1"
+            });
+            resolve('Async Hello world');
+        }, Frames[i][j].duration);
+    });
+};
+
 function Deal(i){
     for (let j in Frames[i]){
         if (`${j}` != "setting"){
+            DOM(j).css("transition", "");
             console.log(i,Frames[i][j]);
             if (Frames[i][j].position != null){
                 var start = { x: DOM(j).css('left'), y: DOM(j).css('top') }; // 開始位置
@@ -277,26 +330,13 @@ function Deal(i){
                     duration: Frames[i][j].fadeout,           
                     count: 1,  
                     fill: "forwards"           
-                })
+                });
             };
             if (Frames[i][j].rotate != null){
                 console.log(Frames[i][j].duration);
-                dur = StringConversion(Frames[i][j].duration);
-                console.log(dur);
-                DOM(j).css({
-                    "transition": "" + dur + "s",
-                    "transform": "rotateY(180deg)",
-                    "-webkit-transform": "rotateY(180deg)",
-                    "-moz-transform": "rotateY(180deg)",
-                    "-o-transform": "rotateY(180deg)"
-                });
-                DOM(Frames[i][j].rotate.back).css({
-                    "z-index": "2",
-                    "transform": "rotateY(180deg)"
-                });
-                DOM(Frames[i][j].rotate.front).css({
-                    "z-index": "1"
-                });
+                //dur = StringConversion(Frames[i][j].duration);
+                //console.log(dur);
+                asyncRotate(i,j);        
             };
         };
     };
