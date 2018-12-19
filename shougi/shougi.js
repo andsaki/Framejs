@@ -2,7 +2,44 @@ var defaultset = {
     next: "next",
     back: "back",
     reset: "reset",
-}
+};
+var init ={
+    bass: {
+        layer: 0
+    },
+    invou: {
+        layer: 1,
+        position: {
+            x: 532,
+            y: 123
+        }
+    },
+    hisya_flipper: {
+        layer: 1,
+        position: {
+            x: 750,
+            y: 280
+        }
+    },
+    kaku_flipper: {
+        layer: 1,
+        position: {
+            x: 460,
+            y: 123
+        }
+    },
+    invkaku: {
+        layer: 1,
+        position: {
+            x: 532,
+            y: 202
+        }
+    },
+    keima: {
+        width: 65,
+        layer: 1
+    }
+};
 var Frame1 = {
     sotokeima01: {
         attribute: "class",

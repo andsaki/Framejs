@@ -8,35 +8,18 @@ body{
     perspective: 1000;
 }*/
 .bass{
-    position: absolute;
-    z-index: 0;
     top: 100px;
 }
 .invou{
-    position: absolute;
-    z-index: 2;
-    top:123px;
-    left:532px;
     filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.6));
 }
 .hisya_flipper{
-    position: absolute;
-    top:273px;
-    left:750px;
     filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.6));
 }
 .kaku_flipper{
-    position: absolute;
-    z-index: 2;
-    top:123px;
-    left:460px;
     filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.6));
 }
 .invkaku{
-    position: absolute;
-    z-index: 2;
-    top:202px;
-    left:532px;
     filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.6));
 }
 .invryuma{

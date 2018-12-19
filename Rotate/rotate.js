@@ -2,7 +2,8 @@ var defaultset = {
     next: "next",
     back: "back",
     reset: "reset",
-}
+};
+
 var Frame1 = {
     flipper: {
         position: {x: 400, y: 300}, 
