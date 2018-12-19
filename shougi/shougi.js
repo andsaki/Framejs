@@ -1,97 +1,169 @@
-var btn = document.getElementById('button');
-
+var defaultset = {
+    next: "next",
+    back: "back",
+    reset: "reset",
+}
 var Frame1 = {
-    /*event: "click",*/
-    ryuma: {x: -78, y: 78, duration: "1s" },
-}
+    sotokeima01: {
+        attribute: "class",
+        position: {
+            x: 460, 
+            y: 285
+        }, 
+        duration: 1000
+    },
+    setting: {
+        event: "click"
+    }
+};
 var Frame2 = {
-    /*event: "click",*/
-    ou: {x: -78, y: -78, duration: "1s" },
-    ryuma: {delay: "1s", fadeout: "2s" },
-}
+    invkaku: {
+        position: {
+            x: 460, 
+            y: 285
+        },
+        duration: 1000
+    },
+    sotokeima01: {
+        delay: 1000, 
+        fadeout: 2000 
+    },
+    setting: {
+        event: "click"
+    }
+};
 var Frame3 = {
-    /*event: "click",*/
-    sotokinn: {x: -290, y: -78 ,duration: "1s"},
-}
-
-var Frames = [Frame1, Frame2, Frame3];
-
-
-function Conversion(sec){
-    var bar = sec.match(/\d+/);
-    var second = Number(bar) * 1000;
-    return second;
-}
-
-function StartAnime(){
-    Frame();
-}
-
-function DOM(domname){
-    dom = $(`#${domname}`);
-    return dom;
-}
-
-var i = 0;
-function Frame(){
-    btn.onclick = function(event){
-        for (let j in Frames[i]){
-            console.log(j)
-            if (Frames[i][j].x && Frames[i][j].y != null){
-                DOM(j).css({"transform": "translate(" + Frames[i][j].x + "px," + Frames[i][j].y + "px)"});
-            }else if (Frames[i][j].x == null){
-                if (Frames[i][j].y != null){
-                    DOM(j).css({"transform": "translateY(" + Frames[i][j].y + "px)"});
-                }
-            }else if (Frames[i][j].y == null){
-                if (Frames[i][j].x != null){
-                    DOM(j).css({"transform": "translateX(" + Frames[i][j].x + "px)"});
-                }
-            }
-            if (Frames[i][j].duration != null){
-                DOM(j).css({"transition-duration": Frames[i][j].duration});
-            }
-            if (Frames[i][j].delay != null){
-                DOM(j).css({"transition-delay": Frames[i][j].delay});
-            }
-            if (Frames[i][j].fadein != null){
-                DOM(j).append(Frames[i][j].content);
-                DOM(j).keyframes({
-                    '0%': {
-                        opacity: 0
-                    },
-                    '100%': {
-                        opacity: 1
-                    }
-                }, {
-                    duration: Conversion(Frames[i][j].fadein),           
-                    count: 1                  
-                })
-                Frames[i][j].fadein = null;
-            }else if (Frames[i][j].fadeout != null){
-                DOM(j).keyframes({
-                    '0%': {
-                        opacity: 1
-                    },
-                    '100%': {
-                        opacity: 0
-                    }
-                }, {
-                    duration: Conversion(Frames[i][j].fadeout),           
-                    count: 1,  
-                    fill: "forwards"           
-                })
-            }
+    kaku_flipper: {
+        position: {
+            x: 532, 
+            y: 202
+        },
+        duration: 1000,
+        rotate: {
+            front: "kaku",
+            back: "ryuma"
         }
-        i = i + 1;    
-        if (i >= Frames.length){
-            return "end"
-        }else{
-            Frame();
+    },
+    setting: {
+        event: "click"
+    }
+}
+var Frame4 = {
+    invkaku:{
+        position: {
+            x: 532, 
+            y: 202
+        },
+        duration: 1000
+    },
+    kaku_flipper: {
+        delay: 1000, 
+        fadeout: 2000
+    },
+    setting: {
+        event: "click"
+    }
+}
+var Frame5 = {
+    sotokeima02: {
+        attribute: "class",
+        position: {
+            x: 460, 
+            y: 285
+        }, 
+        duration: 1000
+    },
+    setting: {
+        event: "click"
+    }
+}
+var Frame6 = {
+    invkaku: {
+        position: {
+            x: 460, 
+            y: 285
+        },
+        duration: 1000
+    },
+    sotokeima02: {
+        delay: 1000, 
+        fadeout: 2000 
+    },
+    setting: {
+        event: "click"
+    }
+}
+var Frame7 = {
+    sotokeima03: {
+        attribute: "class",
+        position: {
+            x: 610, 
+            y: 285
+        }, 
+        duration: 1000
+    },
+    setting: {
+        event: "click"
+    }
+}
+var Frame8 = {
+    invkinn: {
+        position: {
+            x: 610, 
+            y: 285
+        },
+        duration: 1000
+    },
+    sotokeima03: {
+        delay: 1000, 
+        fadeout: 2000 
+    },
+    setting: {
+        event: "click"
+    }
+}
+var Frame9 = {
+    hisya_flipper: {
+        position: {
+            x: 387, 
+            y: 122
+        },
+        duration: 1000
+    },
+    setting: {
+        event: "click"
+    }
+}
+var Frame10 = {
+    invou: {
+        position: {
+            x: 532, 
+            y: 203
+        },
+        duration: 1000
+    },
+    setting: {
+        event: "click"
+    }
+}
+var Frame11 = {
+    hisya_flipper: {
+        position: {
+            x: 460, 
+            y: 122
+        },
+        duration: 1000,
+        rotate: {
+            front: "hisya",
+            back: "ryuou"
         }
+    },
+    setting: {
+        event: "click"
     }
 }
 
-StartAnime();
+var Frames = [Frame1, Frame2, Frame3,Frame4, Frame5, Frame6,Frame7, Frame8, Frame9,Frame10, Frame11];
 
 
+Frame(Frames);

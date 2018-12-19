@@ -24,6 +24,7 @@
     position: absolute;
     left: 500px;
     top: 300px;
+    filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.6));
 }
 /* hide back of pane during swap */
 .kaku, .ryuma {
@@ -40,4 +41,5 @@
     z-index: 2;
     left:200px;
     top:400px;
+    filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.6));
 }

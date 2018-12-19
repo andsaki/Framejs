@@ -1,63 +1,98 @@
 body{
     position: absolute;
 }
-#bass{
+/*.flip-container {
+    -webkit-perspective: 1000;
+    -moz-perspective: 1000;
+    -o-perspective: 1000;
+    perspective: 1000;
+}*/
+.bass{
     position: absolute;
-    z-index: 1;
+    z-index: 0;
+    top: 100px;
 }
-#ou{
+.invou{
     position: absolute;
     z-index: 2;
-    top:285px;
-    left:535px;
+    top:123px;
+    left:532px;
     filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.6));
 }
-#ryuma{
+.hisya_flipper{
     position: absolute;
-    z-index: 2;
-    top:125px;
-    left:535px;
-    filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.6));
-}
-#invryuma{
-    position: absolute;
-    z-index: 2;
-    top:125px;
-    left:458px;
-    filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.6));
-}
-#kinn{
-    position: absolute;
-    z-index: 2;
-    top:363px;
-    left:313px;
-    filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.6));
-}
-#sotokinn{
-    position: absolute;
-    z-index: 2;
-    top:363px;
+    top:273px;
     left:750px;
     filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.6));
 }
-#ginn{
+.kaku_flipper{
     position: absolute;
     z-index: 2;
-    top:45px;
+    top:123px;
+    left:460px;
+    filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.6));
+}
+.invkaku{
+    position: absolute;
+    z-index: 2;
+    top:202px;
+    left:532px;
+    filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.6));
+}
+.invryuma{
+    position: absolute;
+    z-index: 2;
+    top:125px;
     left:458px;
     filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.6));
 }
-#kyosya{
+.invkinn{
     position: absolute;
     z-index: 2;
     top:363px;
     left:610px;
     filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.6));
 }
-#invfu{
+
+.keima{
     position: absolute;
     z-index: 2;
-    top:370px;
-    left:540px;
+    top:360px;
+    left:535px;
+    filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.6));
+}
+.sotokeima01{
+    position: absolute;
+    z-index: 2;
+    top:363px;
+    left:750px;
+    filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.6));
+}
+.sotokeima02{
+    position: absolute;
+    z-index: 2;
+    top:433px;
+    left:750px;
+    filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.6));
+}
+.sotokeima03{
+    position: absolute;
+    z-index: 2;
+    top:503px;
+    left:750px;
+    filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.6));
+}
+.invfu01{
+    position: absolute;
+    z-index: 2;
+    top:290px;
+    left:390px;
+    filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.6));
+}
+.invfu02{
+    position: absolute;
+    z-index: 2;
+    top:290px;
+    left:537px;
     filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.6));
 }

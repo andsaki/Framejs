@@ -5,10 +5,10 @@ var defaultset = {
 }
 var Frame1 = {
     flipper: {
-        position: {x: 500, y: 400}, 
+        position: {x: 400, y: 300}, 
         attribute: "class",
-        duration: 2000,
-        rotate: {front: "kaku", back: "ryuma"}
+        duration: 1000,
+        //fadeout: 2000,
     },
     kinn: {
         position : {x: 500, y: 200}, 
@@ -18,13 +18,13 @@ var Frame1 = {
     setting: {
         event: "click",
     }
-}
+};
 var Frame2 = {
     flipper: {
-        position: {x: 400, y: 300}, 
+        position: {x: 500, y: 400}, 
         attribute: "class",
-        duration: 1000,
-        fadeout: 2000,
+        duration: 2000,
+        rotate: {front: "kaku", back: "ryuma"}
     },
     kinn: {
         position : {x: 500, y: 600}, 
@@ -33,7 +33,7 @@ var Frame2 = {
     setting: {
         event: "click",
     }
-}
+};
 var Frames = [Frame1, Frame2];
 
 Frame(Frames);

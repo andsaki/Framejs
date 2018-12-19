@@ -61,13 +61,14 @@ function ZIndex(){
                     "-moz-transform-style": "preserve-3d",
                     "-o-transform-style": "preserve-3d",
                     "transform-style": "preserve-3d"
-                })
+                });
                 DOM(Frames[i][j].rotate.front).css({
                     "z-index": "2",
                     "-webkit-backface-visibility": "hidden",
                     "-moz-backface-visibility": "hidden",
                     "-o-backface-visibility": "hidden",
-                    "backface-visibility": "hidden"
+                    "backface-visibility": "hidden",
+                    position: "absolute"
                     //"transform": "rotateY(-180deg)"
                 });
                 DOM(Frames[i][j].rotate.back).css({
@@ -75,7 +76,8 @@ function ZIndex(){
                     "backface-visibility": "hidden",
                     "-webkit-backface-visibility": "hidden",
                     "-moz-backface-visibility": "hidden",
-                    "-o-backface-visibility": "hidden"
+                    "-o-backface-visibility": "hidden",
+                    position: "absolute"
                 });
             };
         };

@@ -2,40 +2,72 @@
 <html lang="ja">
 <head>
 <meta charset="utf-8">
-<link rel = "stylesheet" href="shougi.css">
+
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="jquery.keyframes.min.js"></script>
+<script src="Frame.js"></script>
+<link rel = "stylesheet" href="shougi.css">
 <title>Shougi</title>
 </head>
 <body>
     <form>
-        <input id="button" type="button" value="Start">
+        <input id="next" type="button" value="next">
     </form>
-    <div id = "bass">
+    <form>
+        <input id="back" type="button" value="back">
+    </form>
+    <form>
+        <input id="reset" type="button" value="reset">
+    </form>
+    <div class = "bass">
         <img src="pic/shyougiban.jpg" width="697" height="750">
     </div>
-    <div id = "ou"> 
+    <div class = "invou"> 
         <img src="pic/invou.png" width="70">
     </div>
-    <div id = "ryuma"> 
-        <img src="pic/ryuma.png" width="68">
+    <div class="flip-container">
+        <div class="hisya_flipper">
+            <span class="hisya">
+                <img src="pic/hisya.png" width="68">
+            </span>
+            <span class="ryuou">
+                    <img src="pic/ryuou.png" width="68">
+            </span>
+            
+        </div>    
     </div>
-    <div id = "invryuma"> 
-        <img src="pic/invryuma.png" width="68">
+    <div class="flip-container">
+        <div class="kaku_flipper">
+            <span class="kaku">
+                <img src="pic/kaku.png" width="68">
+            </span>
+            <span class="ryuma">
+                    <img src="pic/ryuma.png" width="68">
+            </span> 
+        </div>    
     </div>
-    <div id = "kinn"> 
-        <img src="pic/kinn.png" width="65">
+    <div class="invkaku">
+        <img src="pic/invkaku.png" width="68">
     </div>
-    <div id = "sotokinn"> 
-        <img src="pic/kinn.png" width="65">
-     </div>
-    <div id = "ginn"> 
-        <img src="pic/ginn.png" width="65">
+    <div class = "invkinn"> 
+        <img src="pic/invkinn.png" width="65">
     </div>
-    <div id = "kyosya"> 
-        <img src="pic/kyosya.png" width="63">
+    <div class = "keima"> 
+        <img src="pic/keima.png" width="65">
     </div>
-    <div id = "invfu"> 
+    <div class = "sotokeima01"> 
+        <img src="pic/keima.png" width="65">
+    </div>
+    <div class = "sotokeima02"> 
+        <img src="pic/keima.png" width="65">
+    </div>
+    <div class = "sotokeima03"> 
+        <img src="pic/keima.png" width="65">
+    </div>
+    <div class = "invfu01"> 
+        <img src="pic/invfu.png" width="60">
+    </div>
+    <div class = "invfu02"> 
         <img src="pic/invfu.png" width="60">
     </div>
     <script type="text/javascript" src="shougi.js"></script>
