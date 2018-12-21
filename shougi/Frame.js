@@ -146,7 +146,7 @@ function StringConversion(num){
 }
 
 function DOM(domname){
-    dom = $(`.${domname}`);
+    dom = $(`#${domname}`);
     return dom;
 };
 
