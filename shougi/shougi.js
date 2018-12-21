@@ -5,39 +5,114 @@ var defaultset = {
 };
 var init ={
     bass: {
-        layer: 0
+        img: "../shougi/pic/shyougiban.jpg",
+        width: 697,
+        height: 750,
+        layer: 0,
+        //width: 70,
+        position: {
+            y: 100
+        }
     },
     invou: {
         layer: 1,
         position: {
             x: 532,
             y: 123
-        }
+        },
+        shadow: 0.6
     },
     hisya_flipper: {
         layer: 1,
         position: {
             x: 750,
             y: 280
-        }
+        },
+        shadow: 0.6
     },
     kaku_flipper: {
         layer: 1,
         position: {
             x: 460,
             y: 123
-        }
+        },
+        shadow: 0.6
     },
     invkaku: {
         layer: 1,
         position: {
             x: 532,
             y: 202
-        }
+        },
+        shadow: 0.6
+    },
+    invryuma: {
+        layer: 1,
+        position: {
+            x: 458,
+            y: 125
+        },
+        shadow: 0.6
+    },
+    invkinn: {
+        layer: 1,
+        position: {
+            x: 610,
+            y: 363
+        },
+        shadow: 0.6
     },
     keima: {
         width: 65,
-        layer: 1
+        layer: 1,
+        position: {
+            x: 535,
+            y: 360
+        },
+        shadow: 0.6
+    },
+    sotokeima01: {
+        width: 65,
+        layer: 1,
+        position: {
+            x: 750,
+            y: 363
+        },
+        shadow: 0.6
+    },
+    sotokeima02: {
+        width: 65,
+        layer: 1,
+        position: {
+            x: 750,
+            y: 433
+        },
+        shadow: 0.6
+    },
+    sotokeima03: {
+        width: 65,
+        layer: 1,
+        position: {
+            x: 750,
+            y: 503
+        },
+        shadow: 0.6
+    },
+    invfu01: {
+        layer: 1,
+        position: {
+            x: 390,
+            y: 290
+        },
+        shadow: 0.6
+    },
+    invfu02: {
+        layer: 1,
+        position: {
+            x: 537,
+            y: 290
+        },
+        shadow: 0.6
     }
 };
 var Frame1 = {

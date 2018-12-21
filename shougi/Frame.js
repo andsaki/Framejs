@@ -14,7 +14,7 @@ function setCSS(){
         for (let css in init[fr0]){
             if (css == "layer"){
                 DOM(fr0).css({
-                    "z-index": "" + init[fr0].layer
+                    "z-index": init[fr0].layer
                 });
                 console.log(init[fr0].layer);
                 console.log(DOM(fr0));
@@ -23,6 +23,27 @@ function setCSS(){
                 DOM(fr0).css({
                     left: init[fr0].position.x,
                     top: init[fr0].position.y
+                });
+            };
+            if (css == "width"){
+                DOM(fr0).css({
+                    width: init[fr0].width
+                });
+            };
+            if (css == "height"){
+                DOM(fr0).css({
+                    height: init[fr0].height
+                });
+            };
+            if (css == "img"){
+                DOM(fr0).css({
+                    "background-image": "url(" + init[fr0].img + ")",
+                    "background-size": "cover"
+                });
+            };
+            if (css == "shadow"){
+                DOM(fr0).css({
+                    filter: "drop-shadow(10px 10px 10px rgba(0, 0, 0," + init[fr0].shadow + "))"
                 });
             };
             DOM(fr0).css({
