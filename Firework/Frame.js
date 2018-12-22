@@ -90,34 +90,16 @@ function fadecheck(){
                     domname: j,
                     state: "fadein"
                 });
-            }else if (Frames[i][j].fadeout != null){
-                fade.push({
-                    domname: j,
-                    state: "fadeout"
-                });
             };
         };
     };
     //console.log(fade);
-    DupFade = Duplication(fade)
+    var DupFade = Duplication(fade)
+    console.log(DupFade);
     console.log(DupFade);
     for(var n = 0; n < DupFade.length;n++){
-        if(DupFade[n].state == "fadeout"){
-            DupFade.splice(n, 1);
-        };
-    };
-    console.log(DupFade);
-    for(var n = 0; n < DupFade.length;n++){
-        /*DOM(DupFade[n].domname).keyframes({
-            '100%': {
-                opacity: 0
-            }
-        }, {
-            duration: 0,           
-            count: 1,  
-            fill: "forwards"           
-        });*/
-        DOM(DupFade[n].domname).css('opacity',0);
+        //DOM(DupFade[n].domname).css('opacity',0);
+        DOM(DupFade[n].domname).animate({opacity: '0'}, 0);
     };
     
     return DupFade
@@ -221,7 +203,6 @@ function eventFunction(i){
             console.log(error);
         });      
     }else if(Frames[i].setting.event == "click"){  
-        //console.log(Frames[i]);
         $(`#${defaultset.next}`).on('click', function() {
             Deal(i);
         });
@@ -229,7 +210,7 @@ function eventFunction(i){
             Back(i);
         });
         $(`#${defaultset.reset}`).on('click', function() {
-            Reset(SP,haveRotate);
+            Reset(SP,haveRotate,fc);
         });
     };
 };
@@ -300,7 +281,7 @@ function eventFunction(i){
     };
 };*/
 
-function Reset(SP,haveRotate){
+function Reset(SP,haveRotate,DupFade){
     console.log(haveRotate);
     for (k = 0; k < haveRotate.length; k++){
         console.log(k);
@@ -308,49 +289,42 @@ function Reset(SP,haveRotate){
         front_idx = Number(now_idx) + 1;
         back_idx = now_idx;
         DOM(haveRotate[k].domname).keyframes({
-            translateX: 68,
-            //rotateY: 180,    
+            translateX: DOM(haveRotate[k].domname).width,
             easing: 'ease',
             
         },{
             count: 1,
             duration: 100,
-            //fill: "forwards"
         });      
         DOM(haveRotate[k].front).keyframes({
-            //rotateY: 180,
         },{
             count: 1,
             duration: 100,
-            //fill: "forwards"
         }); 
         DOM(haveRotate[k].front).css({
             "z-index": "" + front_idx
         });      
         DOM(haveRotate[k].back).keyframes({
-            //rotateY: 180,
         },{
             count: 1,
             duration: 100,
-            //fill: "forwards"
         });
         DOM(haveRotate[k].back).css({
             "z-index": "" + back_idx
-            //"transform": "rotateY(180deg)"
         });
     }
+    
     for (n = 0; n < SP.length; n++){
         x = SP[n].x;
         y = SP[n].y;
         DOM(SP[n].domname).css({left: x, top: y});
-        DOM(SP[n].domname).keyframes({
-            '100%': {
-                opacity: 1
-            }
-        })
+        DOM(SP[n].domname).stop().animate({opacity: '1'}, 0);
         //console.log(DOM(SP[n].domname));
         $(`#${defaultset.reset}`).off("click");
     };
+    for (m = 0; m < DupFade.length; m++){
+        DOM(DupFade[m].domname).stop().animate({opacity: '0'}, 0);
+    }
     $(`#${defaultset.next}`).off("click");
     eventFunction();
 };
@@ -398,14 +372,13 @@ function asyncRotate(i,j) {
         setTimeout(function () {
             // 成功
             DOM(j).keyframes({
-                translateX: 68,
+                translateX: DOM(j).width,
                 rotateY: 180,    
                 easing: 'ease',
                 
             },{
                 count: 1,
                 duration: 100,
-                //fill: "forwards"
             });    
             
             DOM(Frames[i][j].rotate.front).keyframes({
@@ -413,7 +386,6 @@ function asyncRotate(i,j) {
             },{
                 count: 1,
                 duration: 100,
-                //fill: "forwards"
             }); 
             DOM(Frames[i][j].rotate.front).css({
                 "z-index": "" + front_idx
@@ -423,11 +395,9 @@ function asyncRotate(i,j) {
             },{
                 count: 1,
                 duration: 100,
-                //fill: "forwards"
             });
             DOM(Frames[i][j].rotate.back).css({
                 "z-index": "" + back_idx
-                //"transform": "rotateY(180deg)"
             });
             resolve('Async Hello world');
         }, Frames[i][j].duration);

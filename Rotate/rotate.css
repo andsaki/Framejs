@@ -1,9 +1,9 @@
-.flip-container {
+/*.flip-container {
     -webkit-perspective: 1000;
     -moz-perspective: 1000;
     -o-perspective: 1000;
     perspective: 1000;
-}
+}*/
 /* flip the pane when hovered */
 /*#flip-container:hover .flipper {
     -webkit-transform: rotateY(180deg);
@@ -12,7 +12,7 @@
     transform: rotateY(180deg);
 }*/
 /* flip speed goes here */
-.flipper {
+#flipper {
     /*-webkit-transition: 0.6s;
     -webkit-transform-style: preserve-3d;
     -moz-transition: 0.6s;
@@ -21,24 +21,20 @@
     -o-transform-style: preserve-3d;
     transition: 0.6s;
     transform-style: preserve-3d;*/
-    position: absolute;
+    z-index: 1;
     left: 500px;
     top: 300px;
     filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.6));
 }
 /* hide back of pane during swap */
-.kaku, .ryuma {
-    position: absolute;
-}
 /* front pane, placed above back */
 /*.kaku {
     z-index: 2;
 }*/
 /* back, initially hidden pane */
 
-.kinn{
-    position: absolute;
-    z-index: 2;
+#kinn{
+    z-index: 1;
     left:200px;
     top:400px;
     filter: drop-shadow(10px 10px 10px rgba(0, 0, 0, 0.6));

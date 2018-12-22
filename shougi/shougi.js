@@ -117,7 +117,6 @@ var init ={
 };
 var Frame1 = {
     sotokeima01: {
-        attribute: "class",
         position: {
             x: 460, 
             y: 285
@@ -178,7 +177,6 @@ var Frame4 = {
 }
 var Frame5 = {
     sotokeima02: {
-        attribute: "class",
         position: {
             x: 460, 
             y: 285
@@ -207,7 +205,6 @@ var Frame6 = {
 }
 var Frame7 = {
     sotokeima03: {
-        attribute: "class",
         position: {
             x: 610, 
             y: 285

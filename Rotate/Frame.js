@@ -1,10 +1,69 @@
 function Frame(Frames){
     var Frames;
+    if (init == null){
+        setCSS();
+    };
     SP = StartPosition();
     console.log(SP);
     ZI = ZIndex();
-    console.log(ZI);
+    fc = fadecheck();
+    console.log(fc);
     eventFunction();
+};
+
+function setCSS(){
+    for (let fr0 in init){
+        console.log(init[fr0]);
+        for (let css in init[fr0]){
+            if (css == "layer"){
+                DOM(fr0).css({
+                    "z-index": init[fr0].layer
+                });
+                console.log(init[fr0].layer);
+                console.log(DOM(fr0));
+            };
+            if (css == "position"){
+                DOM(fr0).css({
+                    left: init[fr0].position.x,
+                    top: init[fr0].position.y
+                });
+            };
+            if (css == "width"){
+                DOM(fr0).css({
+                    width: init[fr0].width
+                });
+            };
+            if (css == "height"){
+                DOM(fr0).css({
+                    height: init[fr0].height
+                });
+            };
+            if (css == "fillcolor"){
+                DOM(fr0).css({
+                    background: init[fr0].fillcolor
+                });
+            };
+            if (css == "radius"){
+                DOM(fr0).css({
+                    "border-radius": init[fr0].radius + "%"
+                });
+            };
+            if (css == "img"){
+                DOM(fr0).css({
+                    "background-image": "url(" + init[fr0].img + ")",
+                    "background-size": "cover"
+                });
+            };
+            if (css == "shadow"){
+                DOM(fr0).css({
+                    filter: "drop-shadow(10px 10px 10px rgba(0, 0, 0," + init[fr0].shadow + "))"
+                });
+            };
+            DOM(fr0).css({
+                position: "absolute"
+            });         
+        };
+    };
 };
 
 function StartPosition(){
@@ -12,7 +71,7 @@ function StartPosition(){
     for(var i = 0; i < Frames.length;i++){
         for (let j in Frames[i]){
             SP.push({
-                domname : j,
+                domname: j,
                 x: DOM(j).css('left'), 
                 y: DOM(j).css('top')
             });
@@ -22,6 +81,48 @@ function StartPosition(){
     SP = Duplication(SP);
     //console.log(StartPosition);
     return SP
+};
+
+function fadecheck(){
+    fade = [];
+    for(var i = 0; i < Frames.length;i++){
+        for (let j in Frames[i]){
+            if (Frames[i][j].fadein != null){
+                fade.push({
+                    domname: j,
+                    state: "fadein"
+                });
+            }else if (Frames[i][j].fadeout != null){
+                fade.push({
+                    domname: j,
+                    state: "fadeout"
+                });
+            };
+        };
+    };
+    //console.log(fade);
+    DupFade = Duplication(fade)
+    console.log(DupFade);
+    for(var n = 0; n < DupFade.length;n++){
+        if(DupFade[n].state == "fadeout"){
+            DupFade.splice(n, 1);
+        };
+    };
+    console.log(DupFade);
+    for(var n = 0; n < DupFade.length;n++){
+        /*DOM(DupFade[n].domname).keyframes({
+            '100%': {
+                opacity: 0
+            }
+        }, {
+            duration: 0,           
+            count: 1,  
+            fill: "forwards"           
+        });*/
+        DOM(DupFade[n].domname).css('opacity',0);
+    };
+    
+    return DupFade
 };
 
 function Duplication(overlapped){
@@ -39,7 +140,6 @@ function Duplication(overlapped){
             no_overlapped.splice(n,1);   
         }; 
     });
-    
     return no_overlapped
 };
 
@@ -49,39 +149,45 @@ function ZIndex(){
         for (let j in Frames[i]){
             if (Frames[i][j].rotate != null){
                 haveRotate.push({
-                    domename: j,
+                    domname: j,
                     front: Frames[i][j].rotate.front, 
                     back: Frames[i][j].rotate.back
                 });
-                haveRotate = Duplication(haveRotate)
-                console.log(haveRotate);
+                now_idx =  DOM(j).css("z-index");
+                front_idx = Number(now_idx) + 1;
+                back_idx = now_idx;
+                //console.log(now_idx);
                 DOM(j).css({
                     //"transition": "0.6s",
                     "-webkit-transform-style": "preserve-3d",
                     "-moz-transform-style": "preserve-3d",
                     "-o-transform-style": "preserve-3d",
                     "transform-style": "preserve-3d"
-                })
+                });
                 DOM(Frames[i][j].rotate.front).css({
-                    "z-index": "2",
+                    "z-index": "" + front_idx,
                     "-webkit-backface-visibility": "hidden",
                     "-moz-backface-visibility": "hidden",
                     "-o-backface-visibility": "hidden",
-                    "backface-visibility": "hidden"
+                    "backface-visibility": "hidden",
+                    position: "absolute"
                     //"transform": "rotateY(-180deg)"
                 });
                 DOM(Frames[i][j].rotate.back).css({
-                    "z-index": "1",
+                    "z-index": "" + back_idx,
                     "backface-visibility": "hidden",
                     "-webkit-backface-visibility": "hidden",
                     "-moz-backface-visibility": "hidden",
-                    "-o-backface-visibility": "hidden"
+                    "-o-backface-visibility": "hidden",
+                    position: "absolute"
                 });
             };
         };
     };
+    haveRotate = Duplication(haveRotate)
+    console.log(haveRotate);
     return haveRotate
-}
+};
 
 function Conversion(string){
     var bar = string.match(/\d+/);
@@ -95,13 +201,19 @@ function StringConversion(num){
 }
 
 function DOM(domname){
-    dom = $(`.${domname}`);
+    dom = $(`#${domname}`);
     return dom;
 };
 
 function eventFunction(i){
     var i = typeof i !== 'undefined' ?  i : 0;
-    console.log("event")
+    console.log("event");
+    if (i == 0){
+        MD = 0;
+    }else{
+        MD = MaxDuration(i);
+    };
+
     if (Frames[i].setting.event == "auto"){
         asyncFunction(i).then(function (value) {
             // 非同期処理成功
@@ -191,9 +303,12 @@ function eventFunction(i){
 };*/
 
 function Reset(SP,haveRotate){
-    //console.log(SP);
+    console.log(haveRotate);
     for (k = 0; k < haveRotate.length; k++){
-        console.log(haveRotate[k].domename);
+        console.log(k);
+        now_idx =  DOM(haveRotate[k].domname).css("z-index");
+        front_idx = Number(now_idx) + 1;
+        back_idx = now_idx;
         DOM(haveRotate[k].domname).keyframes({
             translateX: 68,
             //rotateY: 180,    
@@ -212,7 +327,7 @@ function Reset(SP,haveRotate){
             //fill: "forwards"
         }); 
         DOM(haveRotate[k].front).css({
-            "z-index": "2"
+            "z-index": "" + front_idx
         });      
         DOM(haveRotate[k].back).keyframes({
             //rotateY: 180,
@@ -222,7 +337,7 @@ function Reset(SP,haveRotate){
             //fill: "forwards"
         });
         DOM(haveRotate[k].back).css({
-            "z-index": "1",
+            "z-index": "" + back_idx
             //"transform": "rotateY(180deg)"
         });
     }
@@ -230,11 +345,12 @@ function Reset(SP,haveRotate){
         x = SP[n].x;
         y = SP[n].y;
         DOM(SP[n].domname).css({left: x, top: y});
-        DOM(SP[n].domname).keyframes({
+        /*DOM(SP[n].domname).keyframes({
             '100%': {
                 opacity: 1
             }
-        })
+        })*/
+        DOM(SP[n].domname).stop().animate({opacity: '1'}, 0);
         //console.log(DOM(SP[n].domname));
         $(`#${defaultset.reset}`).off("click");
     };
@@ -279,18 +395,11 @@ function Animation(domname,start,ctrl,end,dur){
 function asyncRotate(i,j) {
     // Promiseオブジェクトを返却する.処理成功時にはresolveが呼ばれる
     return new Promise(function (resolve) {
+        now_idx =  DOM(j).css("z-index");
+        front_idx = now_idx;
+        back_idx = Number(now_idx) + 1;
         setTimeout(function () {
             // 成功
-            /*DOM(j).css({
-                "transition": "0.6s",
-                "transform": "rotateY(180deg)",
-                "-webkit-transform": "rotateY(180deg)",
-                "-moz-transform": "rotateY(180deg)",
-                "-o-transform": "rotateY(180deg)",
-            });*/
-            /*DOM(j).css({
-                position: "relative",
-            })*/
             DOM(j).keyframes({
                 translateX: 68,
                 rotateY: 180,    
@@ -310,7 +419,7 @@ function asyncRotate(i,j) {
                 //fill: "forwards"
             }); 
             DOM(Frames[i][j].rotate.front).css({
-                "z-index": "1"
+                "z-index": "" + front_idx
             });      
             DOM(Frames[i][j].rotate.back).keyframes({
                 rotateY: 180,
@@ -320,7 +429,7 @@ function asyncRotate(i,j) {
                 //fill: "forwards"
             });
             DOM(Frames[i][j].rotate.back).css({
-                "z-index": "2",
+                "z-index": "" + back_idx
                 //"transform": "rotateY(180deg)"
             });
             resolve('Async Hello world');
@@ -348,24 +457,20 @@ function Deal(i){
                 };
             };
             if (Frames[i][j].fadein != null){
-                DOM(j).append(Frames[i][j].content);
-                DOM(j).keyframes({
-                    '0%': {
-                        opacity: 0
-                    },
+                //DOM(j).append(Frames[i][j].content);
+                DOM(j).stop().animate({opacity: '1'}, Frames[i][j].fadein);
+                /*DOM(j).keyframes({
                     '100%': {
                         opacity: 1
                     }
                 }, {
                     duration: Frames[i][j].fadein,           
                     count: 1                  
-                })
+                })*/
                 //Frames[i][j].fadein = null;
             }else if (Frames[i][j].fadeout != null){
-                DOM(j).keyframes({
-                    '0%': {
-                        opacity: 1
-                    },
+                DOM(j).stop().animate({opacity: '0'}, Frames[i][j].fadeout);
+                /*DOM(j).keyframes({
                     '100%': {
                         opacity: 0
                     }
@@ -373,13 +478,19 @@ function Deal(i){
                     duration: Frames[i][j].fadeout,           
                     count: 1,  
                     fill: "forwards"           
-                });
+                });*/
             };
             if (Frames[i][j].rotate != null){
                 console.log(Frames[i][j].duration);
                 //dur = StringConversion(Frames[i][j].duration);
                 //console.log(dur);
-                asyncRotate(i,j);        
+                asyncRotate(i,j).then(function (value) {
+                    // 非同期処理成功
+                    console.log(value);    // => 'Async Hello world'
+                }).catch(function (error) {
+                    // 非同期処理失敗。呼ばれない
+                    console.log(error);
+                });         
             };
         };
     };
@@ -388,7 +499,40 @@ function Deal(i){
         console.log("end");
     }else{
         $(`#${defaultset.next}`).off("click");
-        eventFunction(i);
+        MD = MaxDuration(i);
+        asyncNext(i,MD).then(function (value) {
+            // 非同期処理成功
+            console.log(value);    // => 'Async Hello world'
+        }).catch(function (error) {
+            // 非同期処理失敗。呼ばれない
+            console.log(error);
+        }); 
     };
+};
+
+function MaxDuration(i){
+    var maxduration = 0;
+    k = i -1
+    console.log(Frames[k]);
+    for (let j in Frames[k]){
+        if (Frames[k][j].duration != null){
+            console.log(Frames[k][j].duration);
+            if (maxduration < Frames[k][j].duration){
+                maxduration = Frames[k][j].duration;
+            };
+        };
+    };
+    console.log(maxduration);
+    return maxduration
+};
+
+function asyncNext(i,MD){
+    return new Promise(function (resolve) {
+        setTimeout(function () {
+            // 成功
+            eventFunction(i);
+            resolve('Async Hello world');
+        }, MD);
+    });
 };
 

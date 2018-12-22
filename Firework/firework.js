@@ -1,6 +1,7 @@
-particlesize = 10;
+particlesize = 5;
 launchEndX = 500;
 launchEndY = 200;
+amount = 50;
 
 // 初期設定
 var defaultset = {
@@ -8,29 +9,34 @@ var defaultset = {
     back: "back",
     reset: "reset",
 };
+
+
 var init = {
     launchParticle: {
         width: particlesize,
         height: particlesize,
-        fillcolor: "blue",
+        fillcolor: "yellow",
         radius: 50,
         position: {
             x: 500,
             y: 800
         }
     },
-    Particle01: {
+};
+
+for(var p = 0; p <= amount; p++){
+    init["Particle" + p] = {
         width: particlesize,
         height: particlesize,
         layer: 1,
-        fillcolor: "blue",
+        fillcolor: "yellow",
         radius: 50,
         position: {
             x: launchEndX,
             y: launchEndY,
         }
-    }
-}
+    };
+};
 
 //アニメーション
 var Frame1 = {
@@ -39,39 +45,53 @@ var Frame1 = {
             x: launchEndX,
             y: launchEndY
         },
-        duration: 500
+        duration: 150
     },
     setting: {
         event: "click"
     }
-}
+};
 var Frame2 = {
     launchParticle: {
-        fadeout: 100
-    },
-    Particle01: {
-        fadein: 0,
+        fadeout: 0
     },
     setting: {
         event: "auto"
     }
-}
+};
+
+for(var p = 1; p <= amount; p++){
+    Frame2["Particle" + p] = {
+        fadein: 0
+    };
+};
+
 var Frame3 = {
-    /*launchParticle: {
-        fadein: 100
-    },*/
-    Particle01: {
+    setting: {
+        event: "auto"
+    }
+}
+
+for(var p = 1; p <= amount; p++){
+    r = 200;
+    cr = r * 0.8;
+    PI_2 = 2 * Math.PI;
+    radian = PI_2/amount * p;
+    Frame3["Particle" + p] = {
         position: {
-            x: 300,
-            y: 100
+            x: r * Math.cos(radian) + launchEndX,
+            y: r * Math.sin(radian) + launchEndY
+        },
+        control: {
+            x: cr * Math.cos(radian) + launchEndX,
+            y: cr * Math.sin(radian) + launchEndY - 100
         },
         duration: 1000,
-        fadeout: 3000
-    },
-    setting: {
-        event: "auto"
-    }
-}
+        fadeout: 1200
+    };
+    console.log(Frame3["Particle" + p].position);
+    console.log(Frame3["Particle" + p].control);
+};
 
 var Frames = [Frame1,Frame2,Frame3];
 

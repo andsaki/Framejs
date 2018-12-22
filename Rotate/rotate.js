@@ -4,16 +4,17 @@ var defaultset = {
     reset: "reset",
 };
 
+var init;
+
 var Frame1 = {
     flipper: {
-        position: {x: 400, y: 300}, 
-        attribute: "class",
+        position: {x: 400, y: 300},
         duration: 1000,
         //fadeout: 2000,
     },
     kinn: {
         position : {x: 500, y: 200}, 
-        control: {x: 300, y: 100}, 
+        //control: {x: 300, y: 100}, 
         duration: 1000,
     },
     setting: {
@@ -23,9 +24,8 @@ var Frame1 = {
 var Frame2 = {
     flipper: {
         position: {x: 500, y: 400}, 
-        attribute: "class",
         duration: 2000,
-        rotate: {front: "kaku", back: "ryuma"}
+        //rotate: {front: "kaku", back: "ryuma"}
     },
     kinn: {
         position : {x: 500, y: 600}, 

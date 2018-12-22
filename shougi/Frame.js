@@ -4,7 +4,8 @@ function Frame(Frames){
     SP = StartPosition();
     console.log(SP);
     ZI = ZIndex();
-    console.log(ZI);
+    fc = fadecheck();
+    console.log(fc);
     eventFunction();
 };
 
@@ -33,6 +34,16 @@ function setCSS(){
             if (css == "height"){
                 DOM(fr0).css({
                     height: init[fr0].height
+                });
+            };
+            if (css == "fillcolor"){
+                DOM(fr0).css({
+                    background: init[fr0].fillcolor
+                });
+            };
+            if (css == "radius"){
+                DOM(fr0).css({
+                    "border-radius": init[fr0].radius + "%"
                 });
             };
             if (css == "img"){
@@ -68,6 +79,30 @@ function StartPosition(){
     SP = Duplication(SP);
     //console.log(StartPosition);
     return SP
+};
+
+function fadecheck(){
+    fade = [];
+    for(var i = 0; i < Frames.length;i++){
+        for (let j in Frames[i]){
+            if (Frames[i][j].fadein != null){
+                fade.push({
+                    domname: j,
+                    state: "fadein"
+                });
+            };
+        };
+    };
+    //console.log(fade);
+    var DupFade = Duplication(fade)
+    console.log(DupFade);
+    console.log(DupFade);
+    for(var n = 0; n < DupFade.length;n++){
+        //DOM(DupFade[n].domname).css('opacity',0);
+        DOM(DupFade[n].domname).animate({opacity: '0'}, 0);
+    };
+    
+    return DupFade
 };
 
 function Duplication(overlapped){
@@ -152,7 +187,13 @@ function DOM(domname){
 
 function eventFunction(i){
     var i = typeof i !== 'undefined' ?  i : 0;
-    console.log("event")
+    console.log("event");
+    if (i == 0){
+        MD = 0;
+    }else{
+        MD = MaxDuration(i);
+    };
+
     if (Frames[i].setting.event == "auto"){
         asyncFunction(i).then(function (value) {
             // 非同期処理成功
@@ -162,7 +203,6 @@ function eventFunction(i){
             console.log(error);
         });      
     }else if(Frames[i].setting.event == "click"){  
-        //console.log(Frames[i]);
         $(`#${defaultset.next}`).on('click', function() {
             Deal(i);
         });
@@ -170,7 +210,7 @@ function eventFunction(i){
             Back(i);
         });
         $(`#${defaultset.reset}`).on('click', function() {
-            Reset(SP,haveRotate);
+            Reset(SP,haveRotate,fc);
         });
     };
 };
@@ -241,7 +281,7 @@ function eventFunction(i){
     };
 };*/
 
-function Reset(SP,haveRotate){
+function Reset(SP,haveRotate,DupFade){
     console.log(haveRotate);
     for (k = 0; k < haveRotate.length; k++){
         console.log(k);
@@ -249,49 +289,42 @@ function Reset(SP,haveRotate){
         front_idx = Number(now_idx) + 1;
         back_idx = now_idx;
         DOM(haveRotate[k].domname).keyframes({
-            translateX: 68,
-            //rotateY: 180,    
+            translateX: DOM(haveRotate[k].domname).width,
             easing: 'ease',
             
         },{
             count: 1,
             duration: 100,
-            //fill: "forwards"
         });      
         DOM(haveRotate[k].front).keyframes({
-            //rotateY: 180,
         },{
             count: 1,
             duration: 100,
-            //fill: "forwards"
         }); 
         DOM(haveRotate[k].front).css({
             "z-index": "" + front_idx
         });      
         DOM(haveRotate[k].back).keyframes({
-            //rotateY: 180,
         },{
             count: 1,
             duration: 100,
-            //fill: "forwards"
         });
         DOM(haveRotate[k].back).css({
             "z-index": "" + back_idx
-            //"transform": "rotateY(180deg)"
         });
     }
+    
     for (n = 0; n < SP.length; n++){
         x = SP[n].x;
         y = SP[n].y;
         DOM(SP[n].domname).css({left: x, top: y});
-        DOM(SP[n].domname).keyframes({
-            '100%': {
-                opacity: 1
-            }
-        })
+        DOM(SP[n].domname).stop().animate({opacity: '1'}, 0);
         //console.log(DOM(SP[n].domname));
         $(`#${defaultset.reset}`).off("click");
     };
+    for (m = 0; m < DupFade.length; m++){
+        DOM(DupFade[m].domname).stop().animate({opacity: '0'}, 0);
+    }
     $(`#${defaultset.next}`).off("click");
     eventFunction();
 };
@@ -339,14 +372,13 @@ function asyncRotate(i,j) {
         setTimeout(function () {
             // 成功
             DOM(j).keyframes({
-                translateX: 68,
+                translateX: DOM(j).width,
                 rotateY: 180,    
                 easing: 'ease',
                 
             },{
                 count: 1,
                 duration: 100,
-                //fill: "forwards"
             });    
             
             DOM(Frames[i][j].rotate.front).keyframes({
@@ -354,7 +386,6 @@ function asyncRotate(i,j) {
             },{
                 count: 1,
                 duration: 100,
-                //fill: "forwards"
             }); 
             DOM(Frames[i][j].rotate.front).css({
                 "z-index": "" + front_idx
@@ -364,11 +395,9 @@ function asyncRotate(i,j) {
             },{
                 count: 1,
                 duration: 100,
-                //fill: "forwards"
             });
             DOM(Frames[i][j].rotate.back).css({
                 "z-index": "" + back_idx
-                //"transform": "rotateY(180deg)"
             });
             resolve('Async Hello world');
         }, Frames[i][j].duration);
@@ -395,24 +424,20 @@ function Deal(i){
                 };
             };
             if (Frames[i][j].fadein != null){
-                DOM(j).append(Frames[i][j].content);
-                DOM(j).keyframes({
-                    '0%': {
-                        opacity: 0
-                    },
+                //DOM(j).append(Frames[i][j].content);
+                DOM(j).stop().animate({opacity: '1'}, Frames[i][j].fadein);
+                /*DOM(j).keyframes({
                     '100%': {
                         opacity: 1
                     }
                 }, {
                     duration: Frames[i][j].fadein,           
                     count: 1                  
-                })
+                })*/
                 //Frames[i][j].fadein = null;
             }else if (Frames[i][j].fadeout != null){
-                DOM(j).keyframes({
-                    '0%': {
-                        opacity: 1
-                    },
+                DOM(j).stop().animate({opacity: '0'}, Frames[i][j].fadeout);
+                /*DOM(j).keyframes({
                     '100%': {
                         opacity: 0
                     }
@@ -420,13 +445,19 @@ function Deal(i){
                     duration: Frames[i][j].fadeout,           
                     count: 1,  
                     fill: "forwards"           
-                });
+                });*/
             };
             if (Frames[i][j].rotate != null){
                 console.log(Frames[i][j].duration);
                 //dur = StringConversion(Frames[i][j].duration);
                 //console.log(dur);
-                asyncRotate(i,j);        
+                asyncRotate(i,j).then(function (value) {
+                    // 非同期処理成功
+                    console.log(value);    // => 'Async Hello world'
+                }).catch(function (error) {
+                    // 非同期処理失敗。呼ばれない
+                    console.log(error);
+                });         
             };
         };
     };
@@ -435,7 +466,40 @@ function Deal(i){
         console.log("end");
     }else{
         $(`#${defaultset.next}`).off("click");
-        eventFunction(i);
+        MD = MaxDuration(i);
+        asyncNext(i,MD).then(function (value) {
+            // 非同期処理成功
+            console.log(value);    // => 'Async Hello world'
+        }).catch(function (error) {
+            // 非同期処理失敗。呼ばれない
+            console.log(error);
+        }); 
     };
+};
+
+function MaxDuration(i){
+    var maxduration = 0;
+    k = i -1
+    console.log(Frames[k]);
+    for (let j in Frames[k]){
+        if (Frames[k][j].duration != null){
+            console.log(Frames[k][j].duration);
+            if (maxduration < Frames[k][j].duration){
+                maxduration = Frames[k][j].duration;
+            };
+        };
+    };
+    console.log(maxduration);
+    return maxduration
+};
+
+function asyncNext(i,MD){
+    return new Promise(function (resolve) {
+        setTimeout(function () {
+            // 成功
+            eventFunction(i);
+            resolve('Async Hello world');
+        }, MD);
+    });
 };
 
