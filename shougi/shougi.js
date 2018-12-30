@@ -1,7 +1,13 @@
+/*
+詰将棋のアニメーション
+*/
+
 var defaultset = {
     next: "next",
     back: "back",
     reset: "reset",
+    allevent: "click",
+    //interval: 1000
 };
 var init ={
     bass: {
@@ -9,7 +15,6 @@ var init ={
         width: 697,
         height: 750,
         layer: 0,
-        //width: 70,
         position: {
             y: 100
         }
@@ -123,9 +128,6 @@ var Frame1 = {
         }, 
         duration: 1000
     },
-    setting: {
-        event: "click"
-    }
 };
 var Frame2 = {
     invkaku: {
@@ -139,9 +141,6 @@ var Frame2 = {
         delay: 1000, 
         fadeout: 2000 
     },
-    setting: {
-        event: "click"
-    }
 };
 var Frame3 = {
     kaku_flipper: {
@@ -155,9 +154,6 @@ var Frame3 = {
             back: "ryuma"
         }
     },
-    setting: {
-        event: "click"
-    }
 }
 var Frame4 = {
     invkaku:{
@@ -171,9 +167,6 @@ var Frame4 = {
         delay: 1000, 
         fadeout: 2000
     },
-    setting: {
-        event: "click"
-    }
 }
 var Frame5 = {
     sotokeima02: {
@@ -183,9 +176,6 @@ var Frame5 = {
         }, 
         duration: 1000
     },
-    setting: {
-        event: "click"
-    }
 }
 var Frame6 = {
     invkaku: {
@@ -199,9 +189,6 @@ var Frame6 = {
         delay: 1000, 
         fadeout: 2000 
     },
-    setting: {
-        event: "click"
-    }
 }
 var Frame7 = {
     sotokeima03: {
@@ -211,9 +198,6 @@ var Frame7 = {
         }, 
         duration: 1000
     },
-    setting: {
-        event: "click"
-    }
 }
 var Frame8 = {
     invkinn: {
@@ -227,9 +211,6 @@ var Frame8 = {
         delay: 1000, 
         fadeout: 2000 
     },
-    setting: {
-        event: "click"
-    }
 }
 var Frame9 = {
     hisya_flipper: {
@@ -239,9 +220,6 @@ var Frame9 = {
         },
         duration: 1000
     },
-    setting: {
-        event: "click"
-    }
 }
 var Frame10 = {
     invou: {
@@ -251,9 +229,6 @@ var Frame10 = {
         },
         duration: 1000
     },
-    setting: {
-        event: "click"
-    }
 }
 var Frame11 = {
     hisya_flipper: {
@@ -267,9 +242,6 @@ var Frame11 = {
             back: "ryuou"
         }
     },
-    setting: {
-        event: "click"
-    }
 }
 
 var Frames = [Frame1, Frame2, Frame3,Frame4, Frame5, Frame6,Frame7, Frame8, Frame9,Frame10, Frame11];

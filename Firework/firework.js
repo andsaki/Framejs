@@ -1,3 +1,9 @@
+/*
+花火のアニメーション。
+初期値は全てinit内で実装。
+フレームオブジェクト外で色々計算することでグラフィカルなアニメーションを制作することができた。
+*/
+
 particlesize = 5;
 launchEndX = 500;
 launchEndY = 200;
@@ -56,7 +62,7 @@ var Frame2 = {
         fadeout: 0
     },
     setting: {
-        event: "auto"
+        event: "click"
     }
 };
 
@@ -68,7 +74,7 @@ for(var p = 1; p <= amount; p++){
 
 var Frame3 = {
     setting: {
-        event: "auto"
+        event: "click"
     }
 }
 

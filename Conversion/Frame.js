@@ -17,8 +17,8 @@ function setCSS(){
                 DOM(fr0).css({
                     "z-index": init[fr0].layer
                 });
-                console.log(init[fr0].layer);
-                console.log(DOM(fr0));
+                //console.log(init[fr0].layer);
+                //console.log(DOM(fr0));
             };
             if (css == "position"){
                 DOM(fr0).css({

@@ -5,11 +5,18 @@
 <link rel = "stylesheet" href="conversion.css">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="jquery.keyframes.min.js"></script>
+<script src="Frame.js"></script>
 <title>Conversion</title>
 </head>
 <body>
     <form>
-            <input id="button" type="button" value="Start">
+        <input id="next" type="button" value="next">
+    </form>
+    <form>
+        <input id="back" type="button" value="back">
+    </form>
+    <form>
+        <input id="reset" type="button" value="reset">
     </form>
     <div id = "outSVG"> 
         <svg id = "inSVG" width = "800" height = "500" viewBox="0 0 800 500">
@@ -146,7 +153,7 @@
                 <text x=450 y=405>
                     0 
                 </text>
-                <text id = "R0" x=100 y=130>
+                <text id = "R0">
                     10
                 </text>
                 <text id = "R1" x=100 y=185>
@@ -160,8 +167,6 @@
         </svg>
     </div>
 <br />
-<script src="RequestAnimationFrame.js"></script>
-<script src="Tween.js"></script>
 <script type="text/javascript" src="conversion.js"></script>
 </body>
 </html>
