@@ -126,25 +126,29 @@ function Duplication(overlapped){
 function ZIndex(){
     haveRotate = [];
     for(var i = 0; i < Frames.length;i++){
-        for (let j in Frames[i]){
-            if (Frames[i][j].rotate != null){
+        for (let key in Frames[i]){
+            if (Frames[i][key].rotate != null){
                 haveRotate.push({
-                    domname: j,
-                    front: Frames[i][j].rotate.front, 
-                    back: Frames[i][j].rotate.back
+                    domname: key,
+                    front: Frames[i][key].rotate.front, 
+                    back: Frames[i][key].rotate.back
                 });
-                now_idx =  DOM(j).css("z-index");
+                now_idx =  DOM(key).css("z-index");
+                console.log(now_idx);
+                if (now_idx == "auto"){
+                    now_idx = 0;
+                }
                 front_idx = Number(now_idx) + 1;
                 back_idx = now_idx;
                 //console.log(now_idx);
-                DOM(j).css({
+                DOM(key).css({
                     //"transition": "0.6s",
                     "-webkit-transform-style": "preserve-3d",
                     "-moz-transform-style": "preserve-3d",
                     "-o-transform-style": "preserve-3d",
                     "transform-style": "preserve-3d"
                 });
-                DOM(Frames[i][j].rotate.front).css({
+                DOM(Frames[i][key].rotate.front).css({
                     "z-index": "" + front_idx,
                     "-webkit-backface-visibility": "hidden",
                     "-moz-backface-visibility": "hidden",
@@ -153,7 +157,7 @@ function ZIndex(){
                     position: "absolute"
                     //"transform": "rotateY(-180deg)"
                 });
-                DOM(Frames[i][j].rotate.back).css({
+                DOM(Frames[i][key].rotate.back).css({
                     "z-index": "" + back_idx,
                     "backface-visibility": "hidden",
                     "-webkit-backface-visibility": "hidden",
