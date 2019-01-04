@@ -4,6 +4,7 @@ function Frame(Frames){
     SP = StartPosition();
     console.log(SP);
     ZI = ZIndex();
+    colores = colorcheck()
     fc = fadecheck();
     console.log(fc);
     eventFunction();
@@ -66,12 +67,12 @@ function setCSS(){
 
 function StartPosition(){
     var SP = [];
-    for(var i = 0; i < Frames.length;i++){
-        for (let j in Frames[i]){
+    for(var n = 0; n < Frames.length;n++){
+        for (let key in Frames[n]){
             SP.push({
-                domname: j,
-                x: DOM(j).css('left'), 
-                y: DOM(j).css('top')
+                domname: key,
+                x: DOM(key).css('left'), 
+                y: DOM(key).css('top')
             });
         };
     };
@@ -81,13 +82,27 @@ function StartPosition(){
     return SP
 };
 
+function colorcheck(){
+    colores = [];
+    for(var n = 0; n < Frames.length;n++){
+        for (let key in Frames[n]){
+            colores.push({
+                domname: key,
+                fillcolor: DOM(key).css('background-color')
+            });
+        };
+    };
+    colores = Duplication(colores);
+    return colores
+}
+
 function fadecheck(){
     fade = [];
     for(var i = 0; i < Frames.length;i++){
-        for (let j in Frames[i]){
-            if (Frames[i][j].fadein != null){
+        for (let key in Frames[i]){
+            if (Frames[i][key].fadein != null){
                 fade.push({
-                    domname: j,
+                    domname: key,
                     state: "fadein"
                 });
             };
@@ -126,25 +141,29 @@ function Duplication(overlapped){
 function ZIndex(){
     haveRotate = [];
     for(var i = 0; i < Frames.length;i++){
-        for (let j in Frames[i]){
-            if (Frames[i][j].rotate != null){
+        for (let key in Frames[i]){
+            if (Frames[i][key].rotate != null){
                 haveRotate.push({
-                    domname: j,
-                    front: Frames[i][j].rotate.front, 
-                    back: Frames[i][j].rotate.back
+                    domname: key,
+                    front: Frames[i][key].rotate.front, 
+                    back: Frames[i][key].rotate.back
                 });
-                now_idx =  DOM(j).css("z-index");
+                now_idx =  DOM(key).css("z-index");
+                console.log(now_idx);
+                if (now_idx == "auto"){
+                    now_idx = 0;
+                }
                 front_idx = Number(now_idx) + 1;
                 back_idx = now_idx;
                 //console.log(now_idx);
-                DOM(j).css({
+                DOM(key).css({
                     //"transition": "0.6s",
                     "-webkit-transform-style": "preserve-3d",
                     "-moz-transform-style": "preserve-3d",
                     "-o-transform-style": "preserve-3d",
                     "transform-style": "preserve-3d"
                 });
-                DOM(Frames[i][j].rotate.front).css({
+                DOM(Frames[i][key].rotate.front).css({
                     "z-index": "" + front_idx,
                     "-webkit-backface-visibility": "hidden",
                     "-moz-backface-visibility": "hidden",
@@ -153,7 +172,7 @@ function ZIndex(){
                     position: "absolute"
                     //"transform": "rotateY(-180deg)"
                 });
-                DOM(Frames[i][j].rotate.back).css({
+                DOM(Frames[i][key].rotate.back).css({
                     "z-index": "" + back_idx,
                     "backface-visibility": "hidden",
                     "-webkit-backface-visibility": "hidden",
@@ -201,7 +220,7 @@ function eventFunction(i){
             Back(i);
         });
         $(`#${defaultset.reset}`).on('click', function() {
-            Reset(SP,haveRotate,fc);
+            Reset(SP,haveRotate,fc,colores);
         });
     }else{
         if (defaultset.allevent == "auto" || Frames[i].setting.event == "auto"){
@@ -220,7 +239,7 @@ function eventFunction(i){
                 Back(i);
             });
             $(`#${defaultset.reset}`).on('click', function() {
-                Reset(SP,haveRotate,fc);
+                Reset(SP,haveRotate,fc,colores);
             });
         };
     }
@@ -292,7 +311,7 @@ function eventFunction(i){
     };
 };*/
 
-function Reset(SP,haveRotate,DupFade){
+function Reset(SP,haveRotate,DupFade,colores){
     console.log(haveRotate);
     for (k = 0; k < haveRotate.length; k++){
         console.log(k);
@@ -335,7 +354,17 @@ function Reset(SP,haveRotate,DupFade){
     };
     for (m = 0; m < DupFade.length; m++){
         DOM(DupFade[m].domname).stop().animate({opacity: '0'}, 0);
-    }
+    };
+    for (c = 0; c < colores.length; c++){
+        DOM(colores[c].domname).keyframes({
+            "background-color": colores[c].fillcolor
+        },{
+            count: 1,
+            fill: "forwards",
+            duration: 0
+        });
+        console.log(colores[c].fillcolor)
+    };
     $(`#${defaultset.next}`).off("click");
     eventFunction();
 };
@@ -390,8 +419,7 @@ function asyncRotate(i,key) {
             DOM(key).keyframes({
                 translateX: DOM(key).width,
                 rotateY: 180,    
-                easing: 'ease',
-                
+                easing: 'ease',   
             },{
                 count: 1,
                 duration: 100,
