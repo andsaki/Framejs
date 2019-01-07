@@ -2,23 +2,25 @@ function Frame(Frames){
     var Frames;
     setCSS();
     SP = StartPosition();
-    console.log(SP);
+    //console.log(SP);
     ZI = ZIndex();
+    colores = colorcheck();
     fc = fadecheck();
-    console.log(fc);
+    //console.log(fc);
+    BK = [];
     eventFunction();
 };
 
 function setCSS(){
     for (let fr0 in init){
-        console.log(init[fr0]);
+        //console.log(init[fr0]);
         for (let css in init[fr0]){
             if (css == "layer"){
                 DOM(fr0).css({
                     "z-index": init[fr0].layer
                 });
-                console.log(init[fr0].layer);
-                console.log(DOM(fr0));
+                //console.log(init[fr0].layer);
+                //console.log(DOM(fr0));
             };
             if (css == "position"){
                 DOM(fr0).css({
@@ -66,12 +68,12 @@ function setCSS(){
 
 function StartPosition(){
     var SP = [];
-    for(var i = 0; i < Frames.length;i++){
-        for (let j in Frames[i]){
+    for(var n = 0; n < Frames.length;n++){
+        for (let key in Frames[n]){
             SP.push({
-                domname: j,
-                x: DOM(j).css('left'), 
-                y: DOM(j).css('top')
+                domname: key,
+                x: DOM(key).css('left'), 
+                y: DOM(key).css('top')
             });
         };
     };
@@ -81,13 +83,44 @@ function StartPosition(){
     return SP
 };
 
+function BackPosition(){
+    var back = [];
+    for(var n = 0; n < Frames.length;n++){
+        for (let key in Frames[n]){
+            back.push({
+                domname: key,
+                x: DOM(key).css('left'), 
+                y: DOM(key).css('top')
+            });
+        };
+    };
+    //console.log(StartPosition);
+    back = Duplication(back);
+    //console.log(StartPosition);
+    return back
+};
+
+function colorcheck(){
+    colores = [];
+    for(var n = 0; n < Frames.length;n++){
+        for (let key in Frames[n]){
+            colores.push({
+                domname: key,
+                fillcolor: DOM(key).css('background-color')
+            });
+        };
+    };
+    colores = Duplication(colores);
+    return colores
+}
+
 function fadecheck(){
     fade = [];
     for(var i = 0; i < Frames.length;i++){
-        for (let j in Frames[i]){
-            if (Frames[i][j].fadein != null){
+        for (let key in Frames[i]){
+            if (Frames[i][key].fadein != null){
                 fade.push({
-                    domname: j,
+                    domname: key,
                     state: "fadein"
                 });
             };
@@ -95,8 +128,7 @@ function fadecheck(){
     };
     //console.log(fade);
     var DupFade = Duplication(fade)
-    console.log(DupFade);
-    console.log(DupFade);
+    //console.log(DupFade);
     for(var n = 0; n < DupFade.length;n++){
         //DOM(DupFade[n].domname).css('opacity',0);
         DOM(DupFade[n].domname).animate({opacity: '0'}, 0);
@@ -123,6 +155,7 @@ function Duplication(overlapped){
     return no_overlapped
 };
 
+
 function ZIndex(){
     haveRotate = [];
     for(var i = 0; i < Frames.length;i++){
@@ -134,7 +167,7 @@ function ZIndex(){
                     back: Frames[i][key].rotate.back
                 });
                 now_idx =  DOM(key).css("z-index");
-                console.log(now_idx);
+                //console.log(now_idx);
                 if (now_idx == "auto"){
                     now_idx = 0;
                 }
@@ -191,21 +224,24 @@ function DOM(domname){
 
 function eventFunction(i){
     var i = typeof i !== 'undefined' ?  i : 0;
-    console.log("event");
     if (i == 0){
         MD = 0;
     }else{
         MD = MaxDuration(i);
     };
+    BK.push(BackPosition());
+    console.log(BK);
     if(defaultset.allevent == "click"){
         $(`#${defaultset.next}`).on('click', function() {
+            //console.log(i);
             Deal(i);
         });
         $(`#${defaultset.back}`).on('click', function() { 
-            Back(i);
+            //console.log(BK);
+            Back(i,BK);
         });
         $(`#${defaultset.reset}`).on('click', function() {
-            Reset(SP,haveRotate,fc);
+            Reset(SP,haveRotate,fc,colores);
         });
     }else{
         if (defaultset.allevent == "auto" || Frames[i].setting.event == "auto"){
@@ -221,92 +257,24 @@ function eventFunction(i){
                 Deal(i);
             });
             $(`#${defaultset.back}`).on('click', function() { 
-                Back(i);
+                Back(i,BK);
             });
             $(`#${defaultset.reset}`).on('click', function() {
-                Reset(SP,haveRotate,fc);
+                Reset(SP,haveRotate,fc,colores);
             });
         };
-    }
+    };
 };
 
-/*function Back(i){
-    i = i - 2;
-    for (let j in Frames[i]){
-        //console.log(i);
-        if (`${j}` != "setting"){
-            if (Frames[i][j].position.x && Frames[i][j].position.y != null){
-                var start = { x: DOM(j).css('left'), y: DOM(j).css('top') }; // 開始位置
-                var end = Frames[i][j].position; // 終了位置
-                var ctrl = Frames[i][j].control; // 制御点
-                console.log(start);
-                if (Frames[i][j].delay == null){
-                    Animation(DOM(j),start,ctrl,end,Frames[i][j].duration);
-                }else{
-                    setTimeout(function(){
-                        Animation(DOM(j),start,ctrl,end,Frames[i][j].duration);
-                    },Frames[i][j].delay);
-                };
-            };
-            if (Frames[i][j].fadein != null){
-                DOM(j).append(Frames[i][j].content);
-                DOM(j).keyframes({
-                    '0%': {
-                        opacity: 0
-                    },
-                    '100%': {
-                        opacity: 1
-                    }
-                }, {
-                    duration: Frames[i][j].fadein,           
-                    count: 1                  
-                })
-                Frames[i][j].fadein = null;
-            }else if (Frames[i][j].fadeout != null){
-                DOM(j).keyframes({
-                    '0%': {
-                        opacity: 1
-                    },
-                    '100%': {
-                        opacity: 0
-                    }
-                }, {
-                    duration: Frames[i][j].fadeout,           
-                    count: 1,  
-                    fill: "forwards"           
-                })
-            };
-            if (Frame[i][j].rotate != null){
-                DOM(j).keyframes({
-                    '100%': {
-                        rotateX: 180,
-                        rotateY: 180, 
-                        rotateZ: 180
-                    }
-                })
-            };
-        };
-    };
-    i = i + 1;    
-    if (i >= Frames.length){
-        console.log("end");
-    }else{
-        $(`#${defaultset.next}`).off("click");
-        eventFunction(i);
-    };
-};*/
-
-function Reset(SP,haveRotate,DupFade){
-    console.log(haveRotate);
+function ReverseRotate(haveRotate){
     for (k = 0; k < haveRotate.length; k++){
-        console.log(k);
+        //console.log(k);
         now_idx =  DOM(haveRotate[k].domname).css("z-index");
         front_idx = Number(now_idx) + 1;
         back_idx = now_idx;
         DOM(haveRotate[k].domname).keyframes({
             translateX: DOM(haveRotate[k].domname).width,
             easing: 'ease',
-            
         },{
             count: 1,
             duration: 100,
@@ -327,20 +295,65 @@ function Reset(SP,haveRotate,DupFade){
         DOM(haveRotate[k].back).css({
             "z-index": "" + back_idx
         });
-    }
-    
+    }; 
+};
+
+function Back(i,BK,haveRotate,DupFade){
+    //$(`#${defaultset.back}`).off("click");
+    console.log(BK);
+    ReverseRotate(haveRotate);
+    count = BK.length;
+    for (n = 0; n < BK[i].length; n++){
+        x = BK[count - 2][n].x;
+        y = BK[count - 2][n].y;
+        DOM(BK[count - 2][n].domname).css({
+            left: x, 
+            top: y
+        });
+        //console.log(x,y);
+        DOM(SP[n].domname).stop().animate({opacity: '1'}, 0);
+        $(`#${defaultset.back}`).off("click");
+    };
+    for (m = 0; m < DupFade.length; m++){
+        DOM(DupFade[m].domname).stop().animate({opacity: '0'}, 0);
+    };
+    i = i - 1;
+    $(`#${defaultset.next}`).off("click");
+    $(`#${defaultset.back}`).off("click");
+    $(`#${defaultset.reset}`).off("click");
+    eventFunction(i);
+};
+
+function Reset(SP,haveRotate,DupFade,colores){
+    //console.log(haveRotate);
+    ReverseRotate(haveRotate);
     for (n = 0; n < SP.length; n++){
         x = SP[n].x;
         y = SP[n].y;
-        DOM(SP[n].domname).css({left: x, top: y});
+        DOM(SP[n].domname).css({
+            left: x, 
+            top: y
+        });
         DOM(SP[n].domname).stop().animate({opacity: '1'}, 0);
-        //console.log(DOM(SP[n].domname));
+        //console.log(x,y);
         $(`#${defaultset.reset}`).off("click");
     };
     for (m = 0; m < DupFade.length; m++){
         DOM(DupFade[m].domname).stop().animate({opacity: '0'}, 0);
-    }
+    };
+    for (c = 0; c < colores.length; c++){
+        DOM(colores[c].domname).keyframes({
+            "background-color": colores[c].fillcolor
+        },{
+            count: 1,
+            fill: "forwards",
+            duration: 0
+        });
+        //console.log(colores[c].fillcolor)
+    };
     $(`#${defaultset.next}`).off("click");
+    $(`#${defaultset.back}`).off("click");
+    $(`#${defaultset.reset}`).off("click");
     eventFunction();
 };
 
@@ -394,8 +407,7 @@ function asyncRotate(i,key) {
             DOM(key).keyframes({
                 translateX: DOM(key).width,
                 rotateY: 180,    
-                easing: 'ease',
-                
+                easing: 'ease',   
             },{
                 count: 1,
                 duration: 100,
@@ -427,7 +439,7 @@ function asyncRotate(i,key) {
 function Deal(i){
     for (let key in Frames[i]){
         if (`${key}` != "setting"){
-            DOM(key).css("transition", "");
+            //DOM(key).css("transition", "");
             console.log(i,Frames[i][key]);
             if (Frames[i][key].position != null){
                 var start = { x: DOM(key).css('left'), y: DOM(key).css('top') }; // 開始位置
@@ -485,12 +497,13 @@ function Deal(i){
             };*/
         };
     };
-    i = i + 1;    
-    console.log(i);
+    i = i + 1; 
     if (i >= Frames.length){
         console.log("end");
     }else{
         $(`#${defaultset.next}`).off("click");
+        $(`#${defaultset.back}`).off("click");
+        $(`#${defaultset.reset}`).off("click");
         MD = MaxDuration(i);
         asyncNext(i,MD).then(function (value) {
             // 非同期処理成功
@@ -508,7 +521,7 @@ function MaxDuration(i){
     //console.log(Frames[k]);
     for (let j in Frames[k]){
         if (Frames[k][j].duration != null){
-            console.log(Frames[k][j].duration);
+            //console.log(Frames[k][j].duration);
             if (maxduration < Frames[k][j].duration){
                 maxduration = Frames[k][j].duration;
             };
