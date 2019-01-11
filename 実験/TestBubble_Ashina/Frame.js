@@ -7,9 +7,6 @@ function Frame(Frames){
     colores = colorcheck()
     fc = fadecheck();
     //console.log(fc);
-    BK = [];
-    state = "next";
-    backcount = 0;
     eventFunction();
 };
 
@@ -85,23 +82,6 @@ function StartPosition(){
     return SP
 };
 
-function BackPosition(){
-    var back = [];
-    for(var n = 0; n < Frames.length;n++){
-        for (let key in Frames[n]){
-            back.push({
-                domname: key,
-                x: DOM(key).css('left'), 
-                y: DOM(key).css('top')
-            });
-        };
-    };
-    //console.log(StartPosition);
-    back = Duplication(back);
-    //console.log(StartPosition);
-    return back
-};
-
 function colorcheck(){
     colores = [];
     for(var n = 0; n < Frames.length;n++){
@@ -135,6 +115,7 @@ function fadecheck(){
         //DOM(DupFade[n].domname).css('opacity',0);
         DOM(DupFade[n].domname).animate({opacity: '0'}, 0);
     };
+    
     return DupFade
 };
 
@@ -167,7 +148,7 @@ function ZIndex(){
                     back: Frames[i][key].rotate.back
                 });
                 now_idx =  DOM(key).css("z-index");
-                //console.log(now_idx);
+                console.log(now_idx);
                 if (now_idx == "auto"){
                     now_idx = 0;
                 }
@@ -224,28 +205,21 @@ function DOM(domname){
 
 function eventFunction(i){
     var i = typeof i !== 'undefined' ?  i : 0;
+    //console.log("event");
     if (i == 0){
         MD = 0;
     }else{
         MD = MaxDuration(i);
     };
-    console.log(state);
-    if (state == "next"){
-        BK.push(BackPosition());
-    };
-    console.log(backcount);
-    //console.log(BK);
-    if (state == "back"){
-        Deal(i);
-    }
+    b = i;
     if(defaultset.allevent == "click"){
         $(`#${defaultset.next}`).on('click', function() {
-            //console.log(i);
+            console.log(i);
             Deal(i);
         });
         $(`#${defaultset.back}`).on('click', function() { 
-            //console.log(BK);
-            Back(i,BK,haveRotate);
+            //console.log(i);
+            Back(b);
         });
         $(`#${defaultset.reset}`).on('click', function() {
             Reset(SP,haveRotate,fc,colores);
@@ -264,16 +238,49 @@ function eventFunction(i){
                 Deal(i);
             });
             $(`#${defaultset.back}`).on('click', function() { 
-                Back(i,BK,haveRotate);
+                Back(i);
             });
             $(`#${defaultset.reset}`).on('click', function() {
                 Reset(SP,haveRotate,fc,colores);
             });
         };
-    };
+    }
 };
 
-function ReverseRotate(haveRotate){
+function Back(i){
+    //$(`#${defaultset.back}`).off("click");
+    i = i - 2;
+    console.log(i);
+    for (let key in Frames[i]){
+        if (`${key}` != "setting"){
+            if (Frames[i][key].position != null){
+                DOM(key).css({left: x, top: y})
+                /*var start = { x: DOM(j).css('left'), y: DOM(j).css('top') }; // 開始位置
+                var end = Frames[i][j].position; // 終了位置
+                var ctrl = Frames[i][j].control; // 制御点
+                console.log(start);
+                if (Frames[i][j].delay == null){
+                    Animation(DOM(j),start,ctrl,end,Frames[i][j].duration);
+                }else{
+                    setTimeout(function(){
+                        Animation(DOM(j),start,ctrl,end,Frames[i][j].duration);
+                    },Frames[i][j].delay);
+                };*/
+            };
+            
+        };
+    };
+    /*i = i + 1;    
+    if (i >= Frames.length){
+        console.log("end");
+    }else{
+        $(`#${defaultset.back}`).off("click");
+        eventFunction(i);
+    };*/
+};
+
+function Reset(SP,haveRotate,DupFade,colores){
+    //console.log(haveRotate);
     for (k = 0; k < haveRotate.length; k++){
         //console.log(k);
         now_idx =  DOM(haveRotate[k].domname).css("z-index");
@@ -302,46 +309,14 @@ function ReverseRotate(haveRotate){
         DOM(haveRotate[k].back).css({
             "z-index": "" + back_idx
         });
-    };
-}
-
-function Back(i,BK,haveRotate){
-    //$(`#${defaultset.back}`).off("click");
-    /*console.log(BK);
-    ReverseRotate(haveRotate);
-    count = BK.length;
-    console.log(count - backcount - 2);
-    for (n = 0; n < BK[i].length; n++){
-        x = BK[count - backcount - 2 ][n].x;
-        y = BK[count - backcount - 2][n].y;
-        DOM(BK[count - backcount - 2][n].domname).css({
-            left: x, 
-            top: y
-        });
-        //console.log(x,y);
-        DOM(SP[n].domname).stop().animate({opacity: '1'}, 0);
-        //console.log(x,y);
-        $(`#${defaultset.back}`).off("click");
-    };
+    }
     
-    i = i - 1;
-    $(`#${defaultset.next}`).off("click");
-    $(`#${defaultset.back}`).off("click");
-    $(`#${defaultset.reset}`).off("click");
-    state = "back";
-    backcount = backcount + 1;
-    eventFunction(i);
-    */
-   ReverseRotate(haveRotate);
     for (n = 0; n < SP.length; n++){
         x = SP[n].x;
         y = SP[n].y;
-        DOM(SP[n].domname).css({
-            left: x, 
-            top: y
-        });
+        DOM(SP[n].domname).css({left: x, top: y});
         DOM(SP[n].domname).stop().animate({opacity: '1'}, 0);
-        //console.log(x,y);
+        //console.log(DOM(SP[n].domname));
         $(`#${defaultset.reset}`).off("click");
     };
     for (m = 0; m < DupFade.length; m++){
@@ -358,42 +333,6 @@ function Back(i,BK,haveRotate){
         //console.log(colores[c].fillcolor)
     };
     $(`#${defaultset.next}`).off("click");
-    $(`#${defaultset.back}`).off("click");
-    $(`#${defaultset.reset}`).off("click");
-    state = "back";
-    eventFunction();
-};
-
-function Reset(SP,haveRotate,DupFade,colores){
-    //console.log(haveRotate);
-    ReverseRotate(haveRotate);
-    for (n = 0; n < SP.length; n++){
-        x = SP[n].x;
-        y = SP[n].y;
-        DOM(SP[n].domname).css({
-            left: x, 
-            top: y
-        });
-        DOM(SP[n].domname).stop().animate({opacity: '1'}, 0);
-        //console.log(x,y);
-        $(`#${defaultset.reset}`).off("click");
-    };
-    for (m = 0; m < DupFade.length; m++){
-        DOM(DupFade[m].domname).stop().animate({opacity: '0'}, 0);
-    };
-    for (c = 0; c < colores.length; c++){
-        DOM(colores[c].domname).keyframes({
-            "background-color": colores[c].fillcolor
-        },{
-            count: 1,
-            fill: "forwards",
-            duration: 0
-        });
-        //console.log(colores[c].fillcolor)
-    };
-    $(`#${defaultset.next}`).off("click");
-    $(`#${defaultset.back}`).off("click");
-    $(`#${defaultset.reset}`).off("click");
     eventFunction();
 };
 
@@ -436,7 +375,7 @@ function Animation(domname,start,ctrl,end,dur){
     });
 };
 
-function asyncRotate(i,key,duration) {
+function asyncRotate(i,key) {
     // Promiseオブジェクトを返却する.処理成功時にはresolveが呼ばれる
     return new Promise(function (resolve) {
         now_idx =  DOM(key).css("z-index");
@@ -472,79 +411,9 @@ function asyncRotate(i,key,duration) {
                 "z-index": "" + back_idx
             });
             resolve('Async Hello world');
-        }, duration);
+        }, Frames[i][key].duration);
     });
 };
-
-
-function BackDeal(i){
-    for (let key in Frames[i]){
-        if (`${key}` != "setting"){
-            //DOM(key).css("transition", "");
-            console.log(i,Frames[i][key]);
-            if (Frames[i][key].position != null){
-                //var start = { x: DOM(key).css('left'), y: DOM(key).css('top') }; // 開始位置
-                var end = Frames[i][key].position; // 終了位置
-                console.log(start,end);
-                DOM(key).css({
-                    left: end.x, 
-                    top: end.y
-                })
-            };
-            if (Frames[i][key].fadein != null){
-                //DOM(j).append(Frames[i][j].content);
-                DOM(key).stop().animate({opacity: '1'}, 0);
-            }else if (Frames[i][key].fadeout != null){
-                DOM(key).stop().animate({opacity: '0'}, 0);
-            };
-            if (Frames[i][key].rotate != null){
-                console.log(Frames[i][key].duration);
-                //dur = StringConversion(Frames[i][j].duration);
-                //console.log(dur);
-                asyncRotate(i,key,0);      
-            };
-            if (Frames[i][key].fillcolor != null){
-                DOM(key).keyframes({
-                    background: Frames[i][key].fillcolor
-                },{
-                    count: 1,
-                    fill: "forwards",
-                    duration: 0
-                });
-            };
-            /*if (Frames[i][key].bordercolor != null){
-                console.log(Frames[i][key].bordercolor)
-                DOM(key).keyframes({
-                    "border-top-color": Frames[i][key].bordercolor,
-                    "border-left-color": Frames[i][key].bordercolor,
-                    "border-bottom-color": Frames[i][key].bordercolor,
-                    "border-right-color": Frames[i][key].bordercolor
-                },{
-                    count: 1,
-                    fill: "forwards",
-                    duration: Frames[i][key].duration
-                });
-            };*/
-        };
-    };
-    i = i + 1; 
-    if (i >= Frames.length){
-        console.log("end");
-    }else{
-        $(`#${defaultset.next}`).off("click");
-        $(`#${defaultset.back}`).off("click");
-        $(`#${defaultset.reset}`).off("click");
-        MD = MaxDuration(i);
-        asyncNext(i,MD).then(function (value) {
-            // 非同期処理成功
-            console.log(value);    // => 'Async Hello world'
-        }).catch(function (error) {
-            // 非同期処理失敗。呼ばれない
-            console.log(error);
-        }); 
-    };
-
-}
 
 function Deal(i){
     for (let key in Frames[i]){
@@ -575,7 +444,7 @@ function Deal(i){
                 console.log(Frames[i][key].duration);
                 //dur = StringConversion(Frames[i][j].duration);
                 //console.log(dur);
-                asyncRotate(i,key,Frames[i][key].duration).then(function (value) {
+                asyncRotate(i,key).then(function (value) {
                     // 非同期処理成功
                     console.log(value);    // => 'Async Hello world'
                 }).catch(function (error) {
@@ -607,13 +476,12 @@ function Deal(i){
             };*/
         };
     };
-    i = i + 1; 
+    i = i + 1;    
+    //console.log(i);
     if (i >= Frames.length){
         console.log("end");
     }else{
         $(`#${defaultset.next}`).off("click");
-        $(`#${defaultset.back}`).off("click");
-        $(`#${defaultset.reset}`).off("click");
         MD = MaxDuration(i);
         asyncNext(i,MD).then(function (value) {
             // 非同期処理成功
@@ -645,8 +513,6 @@ function asyncNext(i,MD){
     return new Promise(function (resolve) {
         setTimeout(function () {
             // 成功
-            state = "next";
-            backcount = 0;
             eventFunction(i);
             resolve('Async Hello world');
         }, MD);

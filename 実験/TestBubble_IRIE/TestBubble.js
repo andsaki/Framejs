@@ -1,4 +1,3 @@
-//https://docs.google.com/forms/d/e/1FAIpQLSc9lfKIOcxcUVaPE1Fr7IKI9_I9fseuZY0MlgECGLVUN_stKQ/viewform
 t = 400; //縦の座標
 a = 100; //左から一番目の座標
 b = 200; //左から二番目の座標
@@ -25,7 +24,7 @@ var defaultset = {
 ・shadow(影をつける。0から1で指定。)*/
 var init = {
     one: {
-        position: {x: a, y: t},
+        position: {x: d, y: t},
         fillcolor: "GhostWhite",
         width: sides,
         height: sides,
@@ -39,14 +38,14 @@ var init = {
         shadow: 0.6
     },
     five: {
-        position: {x: d, y: t},
+        position: {x: b, y: t},
         fillcolor: "GhostWhite",
         width: sides,
         height: sides,
         shadow: 0.6
     },
     seven: {
-        position: {x: b, y: t},
+        position: {x: a, y: t},
         fillcolor: "GhostWhite",
         width: sides,
         height: sides,
@@ -66,15 +65,17 @@ var init = {
 
 //1フレーム目
 var Frame1 = {
-    three: {
-        duration: 0,
-        position: {x: b, y: t},
-        control: {x: b, y: t}
-    },
     seven: {
-        duration: 0,
-        position: {x: c, y: t},
-        control: {x: c, y: t}
+        duration: 1000,
+        position: {x: b, y: t},
+        control: {x: 250, y: 450},
+        fillcolor: "blue"
+    },
+    five: {
+        duration: 1000,
+        position: {x: a, y: t},
+        control: {x: 250, y: 350},
+        fillcolor: "red"
     },
     setting: {
         event: "click",
@@ -84,23 +85,45 @@ var Frame1 = {
 };
 //2フレーム目
 var Frame2 = {
-    five: {
-        duration: 0,
-        position: {x: c, y: t},
-        control: {x: c, y: t}
-    },
     seven: {
-        duration: 0,
-        position: {x: d, y: t},
-        control: {x: d, y: t}
+        duration: 1000,
+        position: {x: c, y: t},
+        control: {x: 350, y: 450},
+        fillcolor: "blue"
+    },
+    three: {
+        duration: 1000,
+        position: {x: b, y: t},
+        control: {x: 350, y: 350},
+        fillcolor: "red"
     },
     setting: {
-        event: "click",
-        //event: "auto",
+        //event: "click",
+        event: "auto",
+        //interval: 3000
+    }
+};
+//3フレーム目
+var Frame3 = {
+    seven: {
+        duration: 1000,
+        position: {x: d, y: t},
+        control: {x: 350, y: 450},
+        fillcolor: "blue"
+    },
+    one: {
+        duration: 1000,
+        position: {x: c, y: t},
+        control: {x: 350, y: 350},
+        fillcolor: "red"
+    },
+    setting: {
+        //event: "click",
+        event: "auto",
         //interval: 3000
     }
 };
 
-Frames = [Frame1,Frame2];
+Frames = [Frame1,Frame2,Frame3];
 
 Frame(Frames);

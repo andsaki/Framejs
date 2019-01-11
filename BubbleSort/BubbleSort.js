@@ -51,41 +51,41 @@ var init = {
 var Frame1 = {
     one: {
         fillcolor: "yellow",
-        duration: 0
+        duration: 1000
     },
     seven: {
         fillcolor: "skyblue",
-        duration: 0
+        duration: 1000
     }
 };
 var Frame2 = {
     one: {
         fillcolor: "GhostWhite",
-        duration: 0
+        duration: 1000
     },
     three: {
         fillcolor: "red",
-        duration: 0
+        duration: 1000
     },
     seven: {
         fillcolor: "yellow",
-        duration: 0
+        duration: 1000
     }
 };
 var Frame3 = {
     three: {
         fillcolor: "GhostWhite",
-        duration: 0,
+        duration: 1000,
         position: {x: b, y: t},
         control: {x: bc, y: up}
     },
     five: {
         fillcolor: "red",
-        duration: 0,
+        duration: 1000,
     },
     seven: {
         fillcolor: "yellow",
-        duration: 0,
+        duration: 1000,
         position: {x: c, y: t},
         control: {x: bc, y: down}
     }
@@ -93,17 +93,17 @@ var Frame3 = {
 var Frame4 = {
     five: {
         fillcolor: "GhostWhite",
-        duration: 0,
+        duration: 1000,
         position: {x: c, y: t},
         control: {x: cd, y: up}
     },
     seven: {
         fillcolor: "GhostWhite",
-        duration: 0,
+        duration: 1000,
         position: {x: d, y: t},
         control: {x: cd, y: down}
     }
-}
+};
 
 Frames = [Frame1,Frame2, Frame3,Frame4];
 

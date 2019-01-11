@@ -62,7 +62,7 @@ var Frame2 = {
         fadeout: 0
     },
     setting: {
-        event: "click"
+        event: "auto"
     }
 };
 
@@ -74,7 +74,7 @@ for(var p = 1; p <= amount; p++){
 
 var Frame3 = {
     setting: {
-        event: "click"
+        event: "auto"
     }
 }
 
