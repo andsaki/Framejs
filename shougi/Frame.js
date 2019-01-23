@@ -242,39 +242,44 @@ function eventFunction(i){
     if (state == "back"){
         BackDeal(i);
     };
-    if(defaultset.allevent == "click"){
-        $(`#${defaultset.next}`).on('click', function() {
-            //console.log(i);
-            Deal(i);
-        });
-        $(`#${defaultset.back}`).on('click', function() { 
-            //console.log(BK);
-            backcount = i - 1;
-            Back(SP,haveRotate,fc,colores);
-        });
-        $(`#${defaultset.reset}`).on('click', function() {
-            Reset(SP,haveRotate,fc,colores);
-        });
+    if (i > Frames.length){
+        i = i + 1;
+        console.log("end");
     }else{
-        if (defaultset.allevent == "auto" || Frames[i].setting.event == "auto"){
-            asyncFunction(i).then(function (value) {
-                // 非同期処理成功
-                console.log(value);    // => 'Async Hello world'
-            }).catch(function (error) {
-                // 非同期処理失敗。呼ばれない
-                console.log(error);
-            });      
-        }else if(Frames[i].setting.event == "click"){  
+        if(defaultset.allevent == "click"){
             $(`#${defaultset.next}`).on('click', function() {
+                //console.log(i);
                 Deal(i);
             });
             $(`#${defaultset.back}`).on('click', function() { 
+                //console.log(BK);
                 backcount = i - 1;
                 Back(SP,haveRotate,fc,colores);
             });
             $(`#${defaultset.reset}`).on('click', function() {
                 Reset(SP,haveRotate,fc,colores);
             });
+        }else{
+            if (defaultset.allevent == "auto" || Frames[i].setting.event == "auto"){
+                asyncFunction(i).then(function (value) {
+                    // 非同期処理成功
+                    console.log(value);    // => 'Async Hello world'
+                }).catch(function (error) {
+                    // 非同期処理失敗。呼ばれない
+                    console.log(error);
+                });      
+            }else if(Frames[i].setting.event == "click"){  
+                $(`#${defaultset.next}`).on('click', function() {
+                    Deal(i);
+                });
+                $(`#${defaultset.back}`).on('click', function() { 
+                    backcount = i - 1;
+                    Back(SP,haveRotate,fc,colores);
+                });
+                $(`#${defaultset.reset}`).on('click', function() {
+                    Reset(SP,haveRotate,fc,colores);
+                });
+            };
         };
     };
 };
@@ -559,7 +564,18 @@ function Deal(i){
         };
     };
     i = i + 1; 
-    if (i >= Frames.length){
+    $(`#${defaultset.next}`).off("click");
+    $(`#${defaultset.back}`).off("click");
+    $(`#${defaultset.reset}`).off("click");
+    MD = MaxDuration(i);
+    asyncNext(i,MD).then(function (value) {
+        // 非同期処理成功
+        console.log(value);    // => 'Async Hello world'
+    }).catch(function (error) {
+        // 非同期処理失敗。呼ばれない
+        console.log(error);
+    }); 
+    /*if (i >= Frames.length){
         i = i + 1;
         console.log("end");
     }else{
@@ -574,7 +590,7 @@ function Deal(i){
             // 非同期処理失敗。呼ばれない
             console.log(error);
         }); 
-    };
+    };*/
 };
 
 function MaxDuration(i){

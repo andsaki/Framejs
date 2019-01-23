@@ -322,6 +322,7 @@ function Clear(SP,haveRotate,DupFade,colores){
         });
         DOM(SP[n].domname).stop().animate({opacity: '1'}, 0);
         //console.log(x,y);
+        $(`#${defaultset.next}`).off("click");
         $(`#${defaultset.reset}`).off("click");
         $(`#${defaultset.back}`).off("click");
     };
@@ -477,7 +478,14 @@ function BackDeal(i){
         $(`#${defaultset.next}`).off("click");
         $(`#${defaultset.back}`).off("click");
         $(`#${defaultset.reset}`).off("click");
-        eventFunction(i);
+        MD = 0;
+        asyncNext(i,MD).then(function (value) {
+            // 非同期処理成功
+            console.log(value);    // => 'Async Hello world'
+        }).catch(function (error) {
+            // 非同期処理失敗。呼ばれない
+            console.log(error);
+        }); 
         /*MD = MaxDuration(i);
         asyncNext(i,MD).then(function (value) {
             // 非同期処理成功
@@ -515,7 +523,7 @@ function Deal(i){
                 DOM(key).stop().animate({opacity: '0'}, Frames[i][key].fadeout);
             };
             if (Frames[i][key].rotate != null){
-                console.log(Frames[i][key].duration);
+                //console.log(Frames[i][key].duration);
                 //dur = StringConversion(Frames[i][j].duration);
                 //console.log(dur);
                 asyncRotate(i,key,Frames[i][key].duration).then(function (value) {
@@ -552,6 +560,7 @@ function Deal(i){
     };
     i = i + 1; 
     if (i >= Frames.length){
+        i = i + 1;
         console.log("end");
     }else{
         $(`#${defaultset.next}`).off("click");
@@ -588,7 +597,6 @@ function asyncNext(i,MD){
     return new Promise(function (resolve) {
         setTimeout(function () {
             // 成功
-            state = "next";
             eventFunction(i);
             resolve('Async Hello world');
         }, MD);
