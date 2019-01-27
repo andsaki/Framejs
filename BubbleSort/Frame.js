@@ -343,7 +343,9 @@ function Clear(SP,haveRotate,DupFade,colores){
         DOM(SP[n].domname).css({
             left: x, 
             top: y,
-            "z-index": layer
+            "z-index": layer,
+            transform: "scale(1)",
+            transition: "transform 0s"
         });
         DOM(SP[n].domname).stop().animate({opacity: '1'}, 0);
         //console.log(x,y);
@@ -574,6 +576,19 @@ function Deal(i){
                 });
                 //console.log(init[fr0].layer);
                 //console.log(DOM(fr0));
+            };
+            if (Frames[i][key].scale != null){
+                /*DOM(key).keyframes({
+                    scale: Frames[i][key].scale
+                },{
+                    count: 1,
+                    fill: "forwards",
+                    duration: Frames[i][key].duration
+                });*/
+                DOM(key).css({
+                    transform: "scale(" + Frames[i][key].scale + ")",
+                    transition: "transform " + StringConversion(Frames[i][key].duration) + "s"
+                })
             };
             /*if (Frames[i][key].bordercolor != null){
                 console.log(Frames[i][key].bordercolor)

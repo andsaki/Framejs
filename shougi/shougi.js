@@ -126,7 +126,6 @@ var Frame1 = {
             x: 460, 
             y: 285
         }, 
-        scale: 2,
         duration: 1000
     },
 };

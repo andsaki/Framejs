@@ -51,7 +51,8 @@ var init = {
 var Frame1 = {
     one: {
         fillcolor: "yellow",
-        duration: 1000
+        duration: 1000,
+        scale: 3
     },
     seven: {
         fillcolor: "skyblue",
