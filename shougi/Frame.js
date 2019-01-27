@@ -75,7 +75,8 @@ function StartPosition(){
             SP.push({
                 domname: key,
                 x: DOM(key).css('left'), 
-                y: DOM(key).css('top')
+                y: DOM(key).css('top'),
+                layer: DOM(key).css('z-index')
             });
         };
     };
@@ -118,22 +119,38 @@ function colorcheck(){
 
 function fadecheck(){
     fade = [];
-    for(var i = 0; i < Frames.length;i++){
-        for (let key in Frames[i]){
-            if (Frames[i][key].fadein != null){
-                fade.push({
-                    domname: key,
-                    state: "fadein"
-                });
-            };
+    for(var m = 0; m < Frames.length;m++){
+        for (let key in Frames[m]){
+            fade.push({
+                domname: key,
+                state: "init"
+            });
         };
     };
     //console.log(fade);
     var DupFade = Duplication(fade)
     //console.log(DupFade);
+    for(var k = 0; k < Frames.length;k++){
+        for (let key in Frames[k]){
+            if(Frames[k][key].fadein != null){
+                for(var c = 0; c < DupFade.length;c++){
+                    if(DupFade[c].domname == key){
+                        DupFade[c].state = "fadein";
+                    };
+                };
+            }else if(Frames[k][key].fadeout != null){
+                for(var c = 0; c < DupFade.length;c++){
+                    if(DupFade[c].domname == key){
+                        DupFade[c].state = "fadeout";
+                    };
+                };
+            };
+        };
+    };
     for(var n = 0; n < DupFade.length;n++){
-        //DOM(DupFade[n].domname).css('opacity',0);
-        DOM(DupFade[n].domname).animate({opacity: '0'}, 0);
+        if(DupFade[n].state == "fadein"){
+            DOM(DupFade[n].domname).animate({opacity: '0'}, 0);
+        }
     };
     return DupFade
 };
@@ -321,9 +338,12 @@ function Clear(SP,haveRotate,DupFade,colores){
     for (n = 0; n < SP.length; n++){
         x = SP[n].x;
         y = SP[n].y;
+        layer = SP[n].layer;
+        console.log(layer);
         DOM(SP[n].domname).css({
             left: x, 
-            top: y
+            top: y,
+            "z-index": layer
         });
         DOM(SP[n].domname).stop().animate({opacity: '1'}, 0);
         //console.log(x,y);
@@ -332,7 +352,7 @@ function Clear(SP,haveRotate,DupFade,colores){
         $(`#${defaultset.back}`).off("click");
     };
     for (m = 0; m < DupFade.length; m++){
-        DOM(DupFade[m].domname).stop().animate({opacity: '0'}, 0);
+        DOM(DupFade[m].domname).stop().animate({opacity: '1'}, 0);
     };
     for (c = 0; c < colores.length; c++){
         DOM(colores[c].domname).keyframes({
@@ -542,6 +562,22 @@ function Deal(i){
             if (Frames[i][key].fillcolor != null){
                 DOM(key).keyframes({
                     background: Frames[i][key].fillcolor
+                },{
+                    count: 1,
+                    fill: "forwards",
+                    duration: Frames[i][key].duration
+                });
+            };
+            if (Frames[i][key].layer != null){
+                DOM(key).css({
+                    "z-index": Frames[i][key].layer
+                });
+                //console.log(init[fr0].layer);
+                //console.log(DOM(fr0));
+            };
+            if (Frames[i][key].scale != null){
+                DOM(key).keyframes({
+                    scale: Frames[i][key].scale
                 },{
                     count: 1,
                     fill: "forwards",

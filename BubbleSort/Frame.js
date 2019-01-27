@@ -75,7 +75,8 @@ function StartPosition(){
             SP.push({
                 domname: key,
                 x: DOM(key).css('left'), 
-                y: DOM(key).css('top')
+                y: DOM(key).css('top'),
+                layer: DOM(key).css('z-index')
             });
         };
     };
@@ -118,22 +119,38 @@ function colorcheck(){
 
 function fadecheck(){
     fade = [];
-    for(var i = 0; i < Frames.length;i++){
-        for (let key in Frames[i]){
-            if (Frames[i][key].fadein != null){
-                fade.push({
-                    domname: key,
-                    state: "fadein"
-                });
-            };
+    for(var m = 0; m < Frames.length;m++){
+        for (let key in Frames[m]){
+            fade.push({
+                domname: key,
+                state: "init"
+            });
         };
     };
     //console.log(fade);
     var DupFade = Duplication(fade)
     //console.log(DupFade);
+    for(var k = 0; k < Frames.length;k++){
+        for (let key in Frames[k]){
+            if(Frames[k][key].fadein != null){
+                for(var c = 0; c < DupFade.length;c++){
+                    if(DupFade[c].domname == key){
+                        DupFade[c].state = "fadein";
+                    };
+                };
+            }else if(Frames[k][key].fadeout != null){
+                for(var c = 0; c < DupFade.length;c++){
+                    if(DupFade[c].domname == key){
+                        DupFade[c].state = "fadeout";
+                    };
+                };
+            };
+        };
+    };
     for(var n = 0; n < DupFade.length;n++){
-        //DOM(DupFade[n].domname).css('opacity',0);
-        DOM(DupFade[n].domname).animate({opacity: '0'}, 0);
+        if(DupFade[n].state == "fadein"){
+            DOM(DupFade[n].domname).animate({opacity: '0'}, 0);
+        }
     };
     return DupFade
 };
@@ -242,39 +259,44 @@ function eventFunction(i){
     if (state == "back"){
         BackDeal(i);
     };
-    if(defaultset.allevent == "click"){
-        $(`#${defaultset.next}`).on('click', function() {
-            //console.log(i);
-            Deal(i);
-        });
-        $(`#${defaultset.back}`).on('click', function() { 
-            //console.log(BK);
-            backcount = i - 1;
-            Back(SP,haveRotate,fc,colores);
-        });
-        $(`#${defaultset.reset}`).on('click', function() {
-            Reset(SP,haveRotate,fc,colores);
-        });
+    if (i > Frames.length){
+        i = i + 1;
+        console.log("end");
     }else{
-        if (defaultset.allevent == "auto" || Frames[i].setting.event == "auto"){
-            asyncFunction(i).then(function (value) {
-                // 非同期処理成功
-                console.log(value);    // => 'Async Hello world'
-            }).catch(function (error) {
-                // 非同期処理失敗。呼ばれない
-                console.log(error);
-            });      
-        }else if(Frames[i].setting.event == "click"){  
+        if(defaultset.allevent == "click"){
             $(`#${defaultset.next}`).on('click', function() {
+                //console.log(i);
                 Deal(i);
             });
             $(`#${defaultset.back}`).on('click', function() { 
+                //console.log(BK);
                 backcount = i - 1;
                 Back(SP,haveRotate,fc,colores);
             });
             $(`#${defaultset.reset}`).on('click', function() {
                 Reset(SP,haveRotate,fc,colores);
             });
+        }else{
+            if (defaultset.allevent == "auto" || Frames[i].setting.event == "auto"){
+                asyncFunction(i).then(function (value) {
+                    // 非同期処理成功
+                    console.log(value);    // => 'Async Hello world'
+                }).catch(function (error) {
+                    // 非同期処理失敗。呼ばれない
+                    console.log(error);
+                });      
+            }else if(Frames[i].setting.event == "click"){  
+                $(`#${defaultset.next}`).on('click', function() {
+                    Deal(i);
+                });
+                $(`#${defaultset.back}`).on('click', function() { 
+                    backcount = i - 1;
+                    Back(SP,haveRotate,fc,colores);
+                });
+                $(`#${defaultset.reset}`).on('click', function() {
+                    Reset(SP,haveRotate,fc,colores);
+                });
+            };
         };
     };
 };
@@ -316,9 +338,12 @@ function Clear(SP,haveRotate,DupFade,colores){
     for (n = 0; n < SP.length; n++){
         x = SP[n].x;
         y = SP[n].y;
+        layer = SP[n].layer;
+        console.log(layer);
         DOM(SP[n].domname).css({
             left: x, 
-            top: y
+            top: y,
+            "z-index": layer
         });
         DOM(SP[n].domname).stop().animate({opacity: '1'}, 0);
         //console.log(x,y);
@@ -327,7 +352,7 @@ function Clear(SP,haveRotate,DupFade,colores){
         $(`#${defaultset.back}`).off("click");
     };
     for (m = 0; m < DupFade.length; m++){
-        DOM(DupFade[m].domname).stop().animate({opacity: '0'}, 0);
+        DOM(DupFade[m].domname).stop().animate({opacity: '1'}, 0);
     };
     for (c = 0; c < colores.length; c++){
         DOM(colores[c].domname).keyframes({
@@ -543,6 +568,13 @@ function Deal(i){
                     duration: Frames[i][key].duration
                 });
             };
+            if (Frames[i][key].layer != null){
+                DOM(key).css({
+                    "z-index": Frames[i][key].layer
+                });
+                //console.log(init[fr0].layer);
+                //console.log(DOM(fr0));
+            };
             /*if (Frames[i][key].bordercolor != null){
                 console.log(Frames[i][key].bordercolor)
                 DOM(key).keyframes({
@@ -559,7 +591,18 @@ function Deal(i){
         };
     };
     i = i + 1; 
-    if (i >= Frames.length){
+    $(`#${defaultset.next}`).off("click");
+    $(`#${defaultset.back}`).off("click");
+    $(`#${defaultset.reset}`).off("click");
+    MD = MaxDuration(i);
+    asyncNext(i,MD).then(function (value) {
+        // 非同期処理成功
+        console.log(value);    // => 'Async Hello world'
+    }).catch(function (error) {
+        // 非同期処理失敗。呼ばれない
+        console.log(error);
+    }); 
+    /*if (i >= Frames.length){
         i = i + 1;
         console.log("end");
     }else{
@@ -574,7 +617,7 @@ function Deal(i){
             // 非同期処理失敗。呼ばれない
             console.log(error);
         }); 
-    };
+    };*/
 };
 
 function MaxDuration(i){

@@ -126,6 +126,7 @@ var Frame1 = {
             x: 460, 
             y: 285
         }, 
+        scale: 2,
         duration: 1000
     },
 };
@@ -135,7 +136,8 @@ var Frame2 = {
             x: 460, 
             y: 285
         },
-        duration: 1000
+        duration: 1000,
+        layer: 100
     },
     sotokeima01: {
         delay: 1000, 
